@@ -9,6 +9,6 @@ public interface RepositorioLugares {
     List<Lugar> getAll();
     Lugar getLugarById(int id);
     void anadirLugar(Lugar lugar);
-    void actualizarLugar(Lugar lugar);
+    void editarLugar(Lugar lugar);
     void eliminarLugar(int id);
 }

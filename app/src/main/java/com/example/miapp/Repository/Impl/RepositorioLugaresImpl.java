@@ -23,7 +23,7 @@ public class RepositorioLugaresImpl implements RepositorioLugares {
     }
 
     @Override
-    public void actualizarLugar(Lugar lugar) {
+    public void editarLugar(Lugar lugar) {
 
     }
 
