@@ -1,6 +1,7 @@
 package com.example.miapp.Modelo;
 
 public class Lugar {
+    private int id;
     private String nombre;
     private String direccion;
     private int telefono;
@@ -13,6 +14,7 @@ public class Lugar {
     private float valoracion;
 
     public Lugar(String nombre, String direccion, int telefono, String foto, String url, String comentario, String fecha, float valoracion) {
+        this.id = 0;
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
@@ -29,6 +31,10 @@ public class Lugar {
     tipoLugar = TipoLugar.GAME;
     }
 
+
+    public int getId() {return id;}
+
+    public void setId(int id) {this.id = id;}
     public String getNombre() {
         return nombre;
     }

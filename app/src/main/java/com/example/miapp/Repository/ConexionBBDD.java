@@ -1,2 +1,4 @@
-package com.example.miapp.Repository;public class ConexionBBDD {
+package com.example.miapp.Repository;
+
+public class ConexionBBDD {
 }
