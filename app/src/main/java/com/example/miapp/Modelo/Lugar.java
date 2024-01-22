@@ -1,19 +1,21 @@
 package com.example.miapp.Modelo;
 
-public class Lugar {
+import java.io.Serializable;
+
+public class Lugar implements Serializable {
     private int id;
     private String nombre;
     private String direccion;
     private int telefono;
     private GeoPunto posicion;
-    private String foto;
+    private int foto;
     private String url;
     private String comentario;
     private String fecha;
     private TipoLugar tipoLugar;
     private float valoracion;
 
-    public Lugar(String nombre, String direccion, int telefono, String foto, String url, String comentario, String fecha, float valoracion) {
+    public Lugar(String nombre, String direccion, int telefono, int foto, String url, String comentario, String fecha, float valoracion) {
         this.id = 0;
         this.nombre = nombre;
         this.direccion = direccion;
@@ -23,6 +25,13 @@ public class Lugar {
         this.url = url;
         this.comentario = comentario;
         this.fecha = fecha;
+        this.valoracion = valoracion;
+    }
+
+    public Lugar(String nombre, int foto, float valoracion){
+        this.id = 0;
+        this.nombre = nombre;
+        this.foto = foto;
         this.valoracion = valoracion;
     }
 
@@ -67,11 +76,11 @@ public class Lugar {
         this.posicion = posicion;
     }
 
-    public String getFoto() {
+    public int getFoto() {
         return foto;
     }
 
-    public void setFoto(String foto) {
+    public void setFoto(int foto) {
         this.foto = foto;
     }
 
@@ -114,4 +123,6 @@ public class Lugar {
     public void setValoracion(float valoracion) {
         this.valoracion = valoracion;
     }
+
+
 }

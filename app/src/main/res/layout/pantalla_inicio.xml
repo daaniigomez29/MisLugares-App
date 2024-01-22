@@ -12,6 +12,7 @@
         android:padding="16dp">
 
         <ListView
+            android:id="@+id/listViewLugares"
             android:layout_width="417dp"
             android:layout_height="759dp"
             app:layout_constraintBottom_toBottomOf="parent"

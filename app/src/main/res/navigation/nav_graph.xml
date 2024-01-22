@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/FirstFragment"
         android:name="com.example.miapp.PantallaInicio"
-        android:label="@string/first_fragment_label"
+        android:label="Vista lugares"
         tools:layout="@layout/pantalla_inicio">
 
         <action
@@ -17,9 +17,9 @@
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="com.example.miapp.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
+        android:name="com.example.miapp.VistaLugar"
+        android:label="Lugar"
+        tools:layout="@layout/vista_lugar">
 
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"

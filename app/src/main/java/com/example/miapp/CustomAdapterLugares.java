@@ -34,7 +34,7 @@ public class CustomAdapterLugares extends ArrayAdapter<Lugar> {
         TextView nombre = view.findViewById(R.id.nombreLugar);
         RatingBar ratingBar = view.findViewById(R.id.valoracion);
 
-        imagen.setImageResource(Integer.parseInt(a.getFoto()));
+        imagen.setImageResource(a.getFoto());
         nombre.setText(a.getNombre());
         ratingBar.setRating(a.getValoracion());
 
