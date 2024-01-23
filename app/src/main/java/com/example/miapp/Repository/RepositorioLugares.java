@@ -2,11 +2,11 @@ package com.example.miapp.Repository;
 
 import com.example.miapp.Modelo.Lugar;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public interface RepositorioLugares {
 
-    List<Lugar> getAll();
+    ArrayList<Lugar> getAll();
     Lugar getLugarById(int id);
     void anadirLugar(Lugar lugar);
     void editarLugar(Lugar lugar);

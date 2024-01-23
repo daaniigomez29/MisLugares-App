@@ -27,7 +27,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/logoSitio"
+                android:id="@+id/iconoLugar"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"

@@ -28,6 +28,20 @@ public class Lugar implements Serializable {
         this.valoracion = valoracion;
     }
 
+    public Lugar(String nombre, String direccion, int telefono, int foto, String url, String comentario, String fecha, float valoracion, TipoLugar tipoLugar) {
+        this.id = 0;
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.posicion = new GeoPunto(0.0,0.0);
+        this.foto = foto;
+        this.url = url;
+        this.comentario = comentario;
+        this.tipoLugar = tipoLugar;
+        this.fecha = fecha;
+        this.valoracion = valoracion;
+    }
+
     public Lugar(String nombre, int foto, float valoracion){
         this.id = 0;
         this.nombre = nombre;
@@ -36,8 +50,7 @@ public class Lugar implements Serializable {
     }
 
     public Lugar(){
-    posicion = new GeoPunto(0.0, 0.0);
-    tipoLugar = TipoLugar.GAME;
+
     }
 
 
@@ -125,4 +138,20 @@ public class Lugar implements Serializable {
     }
 
 
+    @Override
+    public String toString() {
+        return "Lugar{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", direccion='" + direccion + '\'' +
+                ", telefono=" + telefono +
+                ", posicion=" + posicion +
+                ", foto=" + foto +
+                ", url='" + url + '\'' +
+                ", comentario='" + comentario + '\'' +
+                ", fecha='" + fecha + '\'' +
+                ", tipoLugar=" + tipoLugar +
+                ", valoracion=" + valoracion +
+                '}';
+    }
 }

@@ -1,35 +1,57 @@
 package com.example.miapp;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.miapp.Modelo.Lugar;
+import com.example.miapp.Modelo.TipoLugar;
+import com.example.miapp.Repository.ConexionBBDD;
+import com.example.miapp.Repository.Impl.RepositorioLugaresImpl;
 import com.example.miapp.databinding.ActivityMainBinding;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
 
+public class MainActivity extends AppCompatActivity implements VistaLugar.OnLugarChangeListener {
+
+    private ArrayList<Lugar> listaLugares;
+    RepositorioLugaresImpl repositorioLugares = new RepositorioLugaresImpl();
+    ConexionBBDD conexionBBDD = new ConexionBBDD(this);
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+    private Lugar lugar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        repositorioLugares.setConexionBBDD(conexionBBDD);
+        lugar= new Lugar("Arcos", "Calle 111", 111, R.drawable.game_arcos, "URL", "Muy bueno", "23/01/2024", 1.5f, TipoLugar.GAME);
+        Lugar lugar2= new Lugar("Kebab", "Calle 222", 222, R.drawable.kebab_sitio, "URL", "Muy bueno", "23/01/2024", 1.5f, TipoLugar.KEBAB);
+
+        repositorioLugares.anadirLugar(lugar);
+        //Arreglar id
+        repositorioLugares.anadirLugar(lugar2);
+
+        listaLugares = repositorioLugares.getAll();
+
+        for(Lugar lugar : listaLugares){
+            Log.d("Etiqueta", lugar.toString());
+        }
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.toolbar);
-
         NavController navController = Navigation.findNavController(this, R.id.fragmentoLugar);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -53,7 +75,8 @@ public class MainActivity extends AppCompatActivity {
         System.out.println(id);
         //noinspection SimplifiableIfStatement
         if (id == R.id.acercaDe) {
-            return true;
+            NavController navController = Navigation.findNavController(this, R.id.fragmentoLugar);
+            navController.navigate(R.id.FourthFragment);
         }
 
         if(id == R.id.preferencias){
@@ -65,7 +88,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(id == R.id.editarLugar){
-
+            PantallaEditar pantallaEditar = new PantallaEditar();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("editarLugar", lugar);
+            pantallaEditar.setArguments(bundle);
+            NavController navController = Navigation.findNavController(this, R.id.fragmentoLugar);
+            navController.navigate(R.id.ThirdFragment, bundle);
         }
 
         if(id == R.id.eliminarLugar){
@@ -80,5 +108,11 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.fragmentoLugar);
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+
+    @Override
+    public void onLugarChanged(Lugar lugar) {
+        this.lugar = lugar;
     }
 }

@@ -19,6 +19,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.miapp.Modelo.Lugar;
+import com.example.miapp.Modelo.TipoLugar;
 import com.example.miapp.databinding.PantallaInicioBinding;
 
 import java.util.ArrayList;
@@ -27,7 +28,6 @@ public class PantallaInicio extends Fragment {
 
     private PantallaInicioBinding binding;
     private ListView listViewLugares;
-    private ArrayAdapter<String> adapter;
     private ArrayList<Lugar> listaLugares;
     private CustomAdapterLugares customAdapterLugares;
     private Button boton;
@@ -41,7 +41,7 @@ public class PantallaInicio extends Fragment {
 
         listViewLugares = binding.getRoot().findViewById(R.id.listViewLugares);
         listaLugares = new ArrayList<>();
-        Lugar lugar= new Lugar("Game", "Calle 111", 111, R.drawable.game_arcos, "URL", "Muy bueno", "22/01/2024", 1.5f);
+        Lugar lugar= new Lugar("Game", "Calle 111", 111, R.drawable.game_arcos, "URL", "Muy bueno", "22/01/2024", 1.5f, TipoLugar.GAME);
         listaLugares.add(lugar);
         customAdapterLugares = new CustomAdapterLugares(requireActivity(), listaLugares);
         listViewLugares.setAdapter(customAdapterLugares);
@@ -77,7 +77,9 @@ public void onLugarClick(int i){
     //Reemplazar fragmentos
     NavController navController = Navigation.findNavController(requireActivity(), R.id.fragmentoLugar);
     navController.navigate(R.id.SecondFragment, bundle);
-
 }
 
+    public void setListaLugares(ArrayList<Lugar> listaLugares) {
+        this.listaLugares = listaLugares;
+    }
 }
