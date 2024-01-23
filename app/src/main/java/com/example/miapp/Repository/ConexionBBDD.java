@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.miapp.Modelo.GeoPunto;
 import com.example.miapp.Modelo.Lugar;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 
 public class ConexionBBDD extends SQLiteOpenHelper implements RepositorioLugares {
 
+    private int idIncrementar = 0;
     private static final String NOMBRE_BD = "lugares";
     private static final int VERSION_BD = 1;
 
@@ -80,8 +82,24 @@ public class ConexionBBDD extends SQLiteOpenHelper implements RepositorioLugares
                 lugar.setNombre(cursor.getString(cursor.getColumnIndex(nombre)));
                 lugar.setDireccion(cursor.getString(cursor.getColumnIndex(direccion)));
                 lugar.setTelefono(cursor.getInt(cursor.getColumnIndex(telefono)));
-                // Otras asignaciones de campos...
-                lugares.add(lugar);
+                Double latitudd =(double) cursor.getFloat(cursor.getColumnIndex(latitud));
+                Double longitudd =(double) cursor.getFloat(cursor.getColumnIndex(longitud));
+                GeoPunto geoPunto = new GeoPunto(longitudd, latitudd);
+                lugar.setPosicion(geoPunto);
+                lugar.setFoto(cursor.getInt(cursor.getColumnIndex(foto)));
+                lugar.setUrl(cursor.getString(cursor.getColumnIndex(url)));
+                lugar.setComentario(cursor.getString(cursor.getColumnIndex(comentario)));
+                TipoLugar tipoLugar1 = TipoLugar.GAME;
+                if(cursor.getString(cursor.getColumnIndex(tipoLugar)).equals("Game")){
+                    tipoLugar1 = TipoLugar.GAME;
+                } else if(cursor.getString(cursor.getColumnIndex(tipoLugar)).equals("Mcdonalds")){
+                    tipoLugar1 = TipoLugar.MCDONALDS;
+                } else if(cursor.getString(cursor.getColumnIndex(tipoLugar)).equals("Kebab")){
+                    tipoLugar1 = TipoLugar.KEBAB;
+                }
+                lugar.setTipoLugar(tipoLugar1);
+                lugar.setFecha(cursor.getString(cursor.getColumnIndex(fecha)));
+                lugar.setValoracion(cursor.getFloat(cursor.getColumnIndex(valoracion)));                lugares.add(lugar);
             } while (cursor.moveToNext());
         }
 
@@ -124,9 +142,6 @@ public class ConexionBBDD extends SQLiteOpenHelper implements RepositorioLugares
             lugar.setTipoLugar(tipoLugar1);
             lugar.setFecha(cursor.getString(cursor.getColumnIndex(fecha)));
             lugar.setValoracion(cursor.getFloat(cursor.getColumnIndex(valoracion)));
-
-
-            // Otras asignaciones de campos...
         }
 
         cursor.close();
@@ -140,7 +155,6 @@ public class ConexionBBDD extends SQLiteOpenHelper implements RepositorioLugares
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(COL_ID, lugar.getId());
         values.put(nombre, lugar.getNombre());
         values.put(direccion, lugar.getDireccion());
         values.put(telefono, lugar.getTelefono());
@@ -176,6 +190,12 @@ public class ConexionBBDD extends SQLiteOpenHelper implements RepositorioLugares
     public void eliminarLugar(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLA_LUGARES, COL_ID + " = ?", new String[]{String.valueOf(id)});
+        db.close();
+    }
+
+    public void limpiarTablaLugares() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLA_LUGARES, null, null);
         db.close();
     }
 }

@@ -34,6 +34,8 @@ public class RepositorioLugaresImpl implements RepositorioLugares {
         conexionBBDD.eliminarLugar(id);
     }
 
+    public void limpiarTablaLugares(){conexionBBDD.limpiarTablaLugares();};
+
     public void setConexionBBDD(ConexionBBDD conexionBBDD) {
         this.conexionBBDD = conexionBBDD;
     }

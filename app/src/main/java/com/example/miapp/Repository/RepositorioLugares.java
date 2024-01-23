@@ -11,4 +11,5 @@ public interface RepositorioLugares {
     void anadirLugar(Lugar lugar);
     void editarLugar(Lugar lugar);
     void eliminarLugar(int id);
+    void limpiarTablaLugares();
 }

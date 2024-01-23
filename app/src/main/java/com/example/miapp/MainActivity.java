@@ -29,24 +29,24 @@ public class MainActivity extends AppCompatActivity implements VistaLugar.OnLuga
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
     private Lugar lugar;
+    private PantallaInicio pantallaInicio = new PantallaInicio();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         repositorioLugares.setConexionBBDD(conexionBBDD);
+        repositorioLugares.limpiarTablaLugares();
         lugar= new Lugar("Arcos", "Calle 111", 111, R.drawable.game_arcos, "URL", "Muy bueno", "23/01/2024", 1.5f, TipoLugar.GAME);
         Lugar lugar2= new Lugar("Kebab", "Calle 222", 222, R.drawable.kebab_sitio, "URL", "Muy bueno", "23/01/2024", 1.5f, TipoLugar.KEBAB);
-
         repositorioLugares.anadirLugar(lugar);
-        //Arreglar id
-        repositorioLugares.anadirLugar(lugar2);
+        //repositorioLugares.anadirLugar(lugar2);
 
         listaLugares = repositorioLugares.getAll();
 
         for(Lugar lugar : listaLugares){
             Log.d("Etiqueta", lugar.toString());
         }
+
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -115,4 +115,11 @@ public class MainActivity extends AppCompatActivity implements VistaLugar.OnLuga
     public void onLugarChanged(Lugar lugar) {
         this.lugar = lugar;
     }
+/*
+    @Override
+    public void setListaLugares(ArrayList<Lugar> listaLugares) {
+        this.listaLugares = listaLugares;
+    }
+ */
+
 }
