@@ -1,9 +1,11 @@
 package com.example.miapp;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.fragmentoLugar);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+
     }
 
     @Override
@@ -47,9 +50,26 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        System.out.println(id);
         //noinspection SimplifiableIfStatement
         if (id == R.id.acercaDe) {
             return true;
+        }
+
+        if(id == R.id.preferencias){
+
+        }
+
+        if(id == R.id.anadir){
+
+        }
+
+        if(id == R.id.editarLugar){
+
+        }
+
+        if(id == R.id.eliminarLugar){
+
         }
 
         return super.onOptionsItemSelected(item);

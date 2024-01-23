@@ -1,11 +1,15 @@
 package com.example.miapp;
 
+import android.content.ClipData;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
@@ -26,6 +30,7 @@ public class PantallaInicio extends Fragment {
     private ArrayAdapter<String> adapter;
     private ArrayList<Lugar> listaLugares;
     private CustomAdapterLugares customAdapterLugares;
+    private Button boton;
 
     @Override
     public View onCreateView(
@@ -51,6 +56,7 @@ public class PantallaInicio extends Fragment {
         return binding.getRoot();
 
     }
+
 
 
     @Override

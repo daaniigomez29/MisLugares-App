@@ -6,12 +6,15 @@
     import android.view.MenuInflater;
     import android.view.View;
     import android.view.ViewGroup;
+    import android.widget.Button;
     import android.widget.ImageView;
     import android.widget.RatingBar;
     import android.widget.TextView;
 
     import androidx.annotation.NonNull;
     import androidx.fragment.app.Fragment;
+    import androidx.navigation.NavController;
+    import androidx.navigation.Navigation;
     import androidx.navigation.fragment.NavHostFragment;
 
     import com.example.miapp.Modelo.Lugar;
@@ -29,13 +32,12 @@
         private TextView fecha;
         private RatingBar ratingBar;
         private ImageView imagen;
+        private Lugar lugar;
 
         @Override
         public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-            // Inflate the menu; this adds items to the action bar if it is present.
-            inflater.inflate(R.menu.menu_main, menu);
+            inflater.inflate(R.menu.menu_vista_lugar, menu);
             super.onCreateOptionsMenu(menu, inflater);
-            // Resto de tu código si es necesario
         }
 
         @Override
@@ -45,7 +47,7 @@
         ) {
 
             binding = VistaLugarBinding.inflate(inflater, container, false);
-
+            setHasOptionsMenu(true);
             nombreLugar = binding.getRoot().findViewById(R.id.nombreLugar);
             tipoLugar = binding.getRoot().findViewById(R.id.tipoLugar);
             direccion = binding.getRoot().findViewById(R.id.direccion);
@@ -60,7 +62,7 @@
 
             Bundle args = getArguments();
             if(args != null && args.containsKey("lugar")){
-                Lugar lugar = (Lugar) args.getSerializable("lugar");
+                lugar = (Lugar) args.getSerializable("lugar");
                 nombreLugar.setText(lugar.getNombre());
                 direccion.setText(lugar.getDireccion());
                 telefono.setText(String.valueOf(lugar.getTelefono()));
