@@ -23,14 +23,19 @@ import androidx.navigation.Navigation;
 
 import com.example.miapp.Modelo.Lugar;
 import com.example.miapp.Modelo.TipoLugar;
+import com.example.miapp.Repository.ConexionBBDD;
 import com.example.miapp.Repository.Impl.RepositorioLugaresImpl;
 import com.example.miapp.databinding.PantallaInicioBinding;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class PantallaInicio extends Fragment {
 
     private PantallaInicioBinding binding;
+    private RepositorioLugaresImpl repositorioLugares = new RepositorioLugaresImpl();
+    private ConexionBBDD conexionBBDD;
+
     private ListView listViewLugares;
     private ArrayList<Lugar> listaLugares = new ArrayList<>();
     private CustomAdapterLugares customAdapterLugares;
@@ -42,12 +47,10 @@ public class PantallaInicio extends Fragment {
             Bundle savedInstanceState
     ) {
         binding = PantallaInicioBinding.inflate(inflater, container, false);
+        repositorioLugares.setConexionBBDD(conexionBBDD); //Creamos la conexión para la base de datos
 
+        listaLugares = repositorioLugares.getAll();
 
-
-        for (Lugar lugar : listaLugares) {
-            Log.d("Pantalla inicio", lugar.toString());
-        }
         listViewLugares = binding.getRoot().findViewById(R.id.listViewLugares);
         customAdapterLugares = new CustomAdapterLugares(requireActivity(), listaLugares);
         listViewLugares.setAdapter(customAdapterLugares);
@@ -64,6 +67,13 @@ public class PantallaInicio extends Fragment {
 
     public PantallaInicio() {
 
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        // Asociar el fragmento a la actividad y obtener el contexto aquí
+        conexionBBDD = new ConexionBBDD(requireContext());
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.example.miapp.Modelo.Lugar;
 import com.example.miapp.Repository.ConexionBBDD;
 import com.example.miapp.Repository.RepositorioLugares;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class RepositorioLugaresImpl implements RepositorioLugares {

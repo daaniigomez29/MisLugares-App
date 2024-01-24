@@ -5,7 +5,9 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.navigation.NavController;
+import androidx.navigation.NavHost;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
@@ -18,6 +20,7 @@ import com.example.miapp.databinding.ActivityMainBinding;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.util.ArrayList;
 
@@ -42,11 +45,6 @@ public class MainActivity extends AppCompatActivity implements VistaLugar.OnLuga
         //repositorioLugares.anadirLugar(lugar2);
 
         listaLugares = repositorioLugares.getAll();
-
-        for(Lugar lugar : listaLugares){
-            Log.d("Etiqueta", lugar.toString());
-        }
-
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
