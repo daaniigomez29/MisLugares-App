@@ -27,33 +27,30 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements VistaLugar.OnLugarChangeListener {
 
     private ArrayList<Lugar> listaLugares;
-    RepositorioLugaresImpl repositorioLugares = new RepositorioLugaresImpl();
-    ConexionBBDD conexionBBDD = new ConexionBBDD(this);
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
-    private Lugar lugar;
-    private PantallaInicio pantallaInicio = new PantallaInicio();
+    private RepositorioLugaresImpl repositorioLugares;
+    private Lugar lugarEditar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        repositorioLugares.setConexionBBDD(conexionBBDD);
-        repositorioLugares.limpiarTablaLugares();
-        lugar= new Lugar("Arcos", "Calle 111", 111, R.drawable.game_arcos, "URL", "Muy bueno", "23/01/2024", 1.5f, TipoLugar.GAME);
-        Lugar lugar2= new Lugar("Kebab", "Calle 222", 222, R.drawable.kebab_sitio, "URL", "Muy bueno", "23/01/2024", 1.5f, TipoLugar.KEBAB);
-        repositorioLugares.anadirLugar(lugar);
-        //repositorioLugares.anadirLugar(lugar2);
-
-        listaLugares = repositorioLugares.getAll();
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        repositorioLugares = new RepositorioLugaresImpl(this);
 
         setSupportActionBar(binding.toolbar);
         NavController navController = Navigation.findNavController(this, R.id.fragmentoLugar);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
+        /*
+
+        NavController navController = Navigation.findNavController(this, R.id.fragmentoLugar);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+
+         */
     }
 
     @Override
@@ -88,14 +85,18 @@ public class MainActivity extends AppCompatActivity implements VistaLugar.OnLuga
         if(id == R.id.editarLugar){
             PantallaEditar pantallaEditar = new PantallaEditar();
             Bundle bundle = new Bundle();
-            bundle.putSerializable("editarLugar", lugar);
+            bundle.putSerializable("editarLugar", lugarEditar);
             pantallaEditar.setArguments(bundle);
             NavController navController = Navigation.findNavController(this, R.id.fragmentoLugar);
             navController.navigate(R.id.ThirdFragment, bundle);
         }
 
-        if(id == R.id.eliminarLugar){
+        if(id == R.id.confirmarEdit){
+            repositorioLugares.editarLugar(lugarEditar);
+        }
 
+        if(id == R.id.eliminarLugar){
+            repositorioLugares.eliminarLugar(lugarEditar.getId());
         }
 
         return super.onOptionsItemSelected(item);
@@ -111,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements VistaLugar.OnLuga
 
     @Override
     public void onLugarChanged(Lugar lugar) {
-        this.lugar = lugar;
+        this.lugarEditar = lugar;
     }
 /*
     @Override

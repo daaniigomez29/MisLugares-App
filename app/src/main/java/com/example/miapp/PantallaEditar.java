@@ -17,6 +17,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.miapp.Modelo.Lugar;
+import com.example.miapp.Repository.Impl.RepositorioLugaresImpl;
 import com.example.miapp.databinding.FragmentPantallaEditarBinding;
 
 import java.text.ParseException;
@@ -27,7 +28,7 @@ import java.util.Date;
 public class PantallaEditar extends Fragment {
 
     FragmentPantallaEditarBinding binding;
-
+    private RepositorioLugaresImpl repositorioLugares;
     private TextView nombreLugar;
     private TextView tipoLugar;
     private ImageView iconoLugar;
@@ -152,5 +153,9 @@ public class PantallaEditar extends Fragment {
         }
 
         return calendar;
+    }
+
+    public void setRepositorioLugares(RepositorioLugaresImpl repositorioLugares) {
+        this.repositorioLugares = repositorioLugares;
     }
 }

@@ -175,12 +175,20 @@ public class ConexionBBDD extends SQLiteOpenHelper implements RepositorioLugares
     @Override
     public void editarLugar(Lugar lugar) {
         SQLiteDatabase db = this.getWritableDatabase();
-
+        Log.d("VER ID", lugar.toString());
         ContentValues values = new ContentValues();
         values.put(nombre, lugar.getNombre());
         values.put(direccion, lugar.getDireccion());
         values.put(telefono, lugar.getTelefono());
-        // Otras asignaciones de campos...
+        values.put(direccion, lugar.getDireccion());
+        values.put(latitud, lugar.getPosicion().getLatitud());
+        values.put(longitud, lugar.getPosicion().getLongitud());
+        values.put(foto, lugar.getFoto());
+        values.put(url, lugar.getUrl());
+        values.put(comentario, lugar.getComentario());
+        values.put(tipoLugar, lugar.getTipoLugar().getNombre());
+        values.put(fecha, lugar.getFecha());
+        values.put(valoracion, lugar.getValoracion());
 
         db.update(TABLA_LUGARES, values, COL_ID + " = ?", new String[]{String.valueOf(lugar.getId())});
         db.close();

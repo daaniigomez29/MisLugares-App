@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -21,6 +22,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.miapp.Modelo.GeoPunto;
 import com.example.miapp.Modelo.Lugar;
 import com.example.miapp.Modelo.TipoLugar;
 import com.example.miapp.Repository.ConexionBBDD;
@@ -33,13 +35,10 @@ import java.util.ArrayList;
 public class PantallaInicio extends Fragment {
 
     private PantallaInicioBinding binding;
-    private RepositorioLugaresImpl repositorioLugares = new RepositorioLugaresImpl();
-    private ConexionBBDD conexionBBDD;
-
+    private RepositorioLugaresImpl repositorioLugares;
     private ListView listViewLugares;
     private ArrayList<Lugar> listaLugares = new ArrayList<>();
     private CustomAdapterLugares customAdapterLugares;
-    private Button boton;
 
     @Override
     public View onCreateView(
@@ -47,7 +46,6 @@ public class PantallaInicio extends Fragment {
             Bundle savedInstanceState
     ) {
         binding = PantallaInicioBinding.inflate(inflater, container, false);
-        repositorioLugares.setConexionBBDD(conexionBBDD); //Creamos la conexión para la base de datos
 
         listaLugares = repositorioLugares.getAll();
 
@@ -73,7 +71,7 @@ public class PantallaInicio extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         // Asociar el fragmento a la actividad y obtener el contexto aquí
-        conexionBBDD = new ConexionBBDD(requireContext());
+        repositorioLugares = new RepositorioLugaresImpl(requireContext());
     }
 
     @Override
@@ -96,15 +94,7 @@ public class PantallaInicio extends Fragment {
         navController.navigate(R.id.SecondFragment, bundle);
     }
 
-    /*public void setListaLugares(ArrayList<Lugar> listaLugares) {
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            bundle.putSerializable("listaLugares", listaLugares);
-
-            // Puedes hacer lo que necesites con el adaptador si es necesario
-            if (customAdapterLugares != null) {
-                customAdapterLugares.notifyDataSetChanged();
-            }
-        }
-     */
+    public ArrayList<Lugar> getListaLugares() {
+        return listaLugares;
+    }
 }
