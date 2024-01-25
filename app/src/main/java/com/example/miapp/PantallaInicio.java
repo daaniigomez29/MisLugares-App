@@ -90,6 +90,11 @@ public class PantallaInicio extends Fragment {
         bundle.putSerializable("lugar", lugarSeleccionado);
         vistaLugar.setArguments(bundle);
 
+        Bundle args = new Bundle();
+        args.putSerializable("repositorio", repositorioLugares);
+        vistaLugar.getArguments().putAll(args);
+        vistaLugar.setArguments(bundle);
+
         //Reemplazar fragmentos
         NavController navController = Navigation.findNavController(requireActivity(), R.id.fragmentoLugar);
         navController.navigate(R.id.SecondFragment, bundle);

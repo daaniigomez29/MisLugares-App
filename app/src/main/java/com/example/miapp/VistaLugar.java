@@ -2,9 +2,11 @@
 
     import android.content.Context;
     import android.os.Bundle;
+    import android.util.Log;
     import android.view.LayoutInflater;
     import android.view.Menu;
     import android.view.MenuInflater;
+    import android.view.MenuItem;
     import android.view.View;
     import android.view.ViewGroup;
     import android.widget.ImageView;
@@ -13,8 +15,12 @@
 
     import androidx.annotation.NonNull;
     import androidx.fragment.app.Fragment;
+    import androidx.navigation.NavController;
+    import androidx.navigation.Navigation;
 
     import com.example.miapp.Modelo.Lugar;
+    import com.example.miapp.Modelo.TipoLugar;
+    import com.example.miapp.Repository.Impl.RepositorioLugaresImpl;
     import com.example.miapp.databinding.VistaLugarBinding;
 
     public class VistaLugar extends Fragment {
@@ -24,7 +30,7 @@
         }
 
         private OnLugarChangeListener mListener;
-
+        RepositorioLugaresImpl repositorioLugares;
         private VistaLugarBinding binding;
         private TextView nombreLugar;
         private TextView tipoLugar;
@@ -45,6 +51,20 @@
             inflater.inflate(R.menu.menu_vista_lugar, menu);
             super.onCreateOptionsMenu(menu, inflater);
         }
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) { //Método que obtiene el botón del menú seleccionado
+            int id = item.getItemId();
+
+            if(id == R.id.eliminarLugar){
+                repositorioLugares.eliminarLugar(lugar.getId());
+                NavController navController = Navigation.findNavController(requireActivity(), R.id.fragmentoLugar);
+                navController.navigate(R.id.FirstFragment);
+            }
+
+            return super.onOptionsItemSelected(item);
+        }
+
 
 
         @Override
@@ -69,8 +89,9 @@
 
 
             Bundle args = getArguments();
-            if(args != null && args.containsKey("lugar")){
+            if(args != null && args.containsKey("lugar") && args.containsKey("repositorio")){
                 lugar = (Lugar) args.getSerializable("lugar");
+                repositorioLugares = (RepositorioLugaresImpl) args.getSerializable("repositorio");
                 nombreLugar.setText(lugar.getNombre());
                 tipoLugar.setText(lugar.getTipoLugar().getNombre());
                 iconoLugar.setImageResource(lugar.getTipoLugar().getImagen());

@@ -14,10 +14,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.miapp.Modelo.Lugar;
@@ -27,15 +30,18 @@ import com.example.miapp.databinding.FragmentPantallaEditarBinding;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class PantallaEditar extends Fragment {
 
     FragmentPantallaEditarBinding binding;
     private RepositorioLugaresImpl repositorioLugares;
     private TextView nombreLugar;
-    private TextView tipoLugar;
+    private Spinner tipoLugar;
+    String opcionSeleccionada;
     private ImageView iconoLugar;
     private TextView direccion;
     private TextView telefono;
@@ -52,18 +58,19 @@ public class PantallaEditar extends Fragment {
         // Required empty public constructor
     }
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) { //Método que obtiene el botón del menú seleccionado
         int id = item.getItemId();
 
         if(id == R.id.confirmarEdit){
             lugar.setNombre(nombreLugar.getText().toString());
-            if(tipoLugar.getText().toString().equals("Kebab")){
+            if(opcionSeleccionada.equals("Kebab")){
                 lugar.setTipoLugar(TipoLugar.KEBAB);
-            } else if(tipoLugar.getText().toString().equals("Game")){
+            } else if(opcionSeleccionada.equals("Game")){
                 lugar.setTipoLugar(TipoLugar.GAME);
-            } else if(tipoLugar.getText().toString().equals("Mcdonalds")){
+            } else if(opcionSeleccionada.equals("Mcdonalds")){
                 lugar.setTipoLugar(TipoLugar.MCDONALDS);
             }
+
             lugar.setDireccion(direccion.getText().toString());
             lugar.setTelefono(Integer.parseInt(telefono.getText().toString()));
             lugar.setUrl(url.getText().toString());
@@ -82,6 +89,10 @@ public class PantallaEditar extends Fragment {
             //navController.navigate(R.id.SecondFragment, bundle);
                 //NavController navController = Navigation.findNavController(requireActivity(), R.id.fragmentoLugar);
                 //navController.navigate(R.id.SecondFragment, bundle);
+        }
+
+        if(id == R.id.eliminarLugar){
+            repositorioLugares.eliminarLugar(lugar.getId());
         }
 
         return super.onOptionsItemSelected(item);
@@ -115,6 +126,16 @@ public class PantallaEditar extends Fragment {
         binding = FragmentPantallaEditarBinding.inflate(inflater, container, false);
         nombreLugar = binding.getRoot().findViewById(R.id.nombreLugar);
         tipoLugar = binding.getRoot().findViewById(R.id.tipoLugar);
+
+        // Lista de opciones para el Spinner
+        List<String> opciones = Arrays.asList("Game", "Kebab", "Mcdonalds");
+        // Crear un ArrayAdapter desde la lista de opciones
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_item, opciones);
+        // Especificar el layout para las opciones al desplegar el Spinner
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Asignar el ArrayAdapter al Spinner
+        tipoLugar.setAdapter(adapter);
+
         iconoLugar = binding.getRoot().findViewById(R.id.iconoLugar);
         direccion = binding.getRoot().findViewById(R.id.direccion);
         telefono =  binding.getRoot().findViewById(R.id.telefono);
@@ -129,7 +150,23 @@ public class PantallaEditar extends Fragment {
             repositorioLugares = (RepositorioLugaresImpl) args.getSerializable("repositorio");
             lugar = (Lugar) args.getSerializable("editarLugar");
             nombreLugar.setText(lugar.getNombre());
-            tipoLugar.setText(lugar.getTipoLugar().getNombre());
+            // Establecer el valor deseado en el Spinner (por ejemplo, "Game")
+            String valorDeseado = lugar.getTipoLugar().getNombre();
+            int posicion = opciones.indexOf(valorDeseado);
+            if (posicion != -1) {
+                tipoLugar.setSelection(posicion);
+            }
+            tipoLugar.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                    // Manejar la selección
+                    opcionSeleccionada = parentView.getItemAtPosition(position).toString();
+                }
+                @Override
+                public void onNothingSelected(AdapterView<?> parentView) {
+                    // Acciones cuando no se selecciona nada (si es necesario)
+                }
+            });
             iconoLugar.setImageResource(lugar.getTipoLugar().getImagen());
             direccion.setText(lugar.getDireccion());
             telefono.setText(String.valueOf(lugar.getTelefono()));
