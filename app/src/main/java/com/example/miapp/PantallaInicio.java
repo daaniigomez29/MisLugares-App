@@ -51,6 +51,7 @@ public class PantallaInicio extends Fragment {
         Log.d("Vuelvo", "Vuelvo despues de eliminar");
         listViewLugares = binding.getRoot().findViewById(R.id.listViewLugares);
         customAdapterLugares = new CustomAdapterLugares(requireActivity(), listaLugares);
+        customAdapterLugares.notifyDataSetChanged();
         listViewLugares.setAdapter(customAdapterLugares);
         listViewLugares.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
             app:destination="@id/SecondFragment" />
+        <action
+            android:id="@+id/action_FirstFragment_to_FifthFragment"
+            app:destination="@id/FifthFragment" />
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
@@ -56,5 +59,15 @@
         <action
             android:id="@+id/action_FourthFragment_to_ThridFragment"
             app:destination="@id/ThirdFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/FifthFragment"
+            android:name="com.example.miapp.PantallaAnadir"
+            android:label="Añadir lugar"
+            tools:layout="@layout/fragment_pantalla_anadir">
+
+        <action
+            android:id="@+id/action_FifthFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
     </fragment>
 </navigation>

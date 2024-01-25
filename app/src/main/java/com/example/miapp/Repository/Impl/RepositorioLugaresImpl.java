@@ -11,7 +11,7 @@ import com.example.miapp.Repository.RepositorioLugares;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class RepositorioLugaresImpl implements RepositorioLugares {
+public class RepositorioLugaresImpl implements RepositorioLugares, Serializable{
 
     Context context;
     ConexionBBDD conexionBBDD;

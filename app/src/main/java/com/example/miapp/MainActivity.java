@@ -24,13 +24,14 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements VistaLugar.OnLugarChangeListener {
+public class MainActivity extends AppCompatActivity implements VistaLugar.OnLugarChangeListener, PantallaAnadir.OnPantallaAnadirChangeListener {
 
     private ArrayList<Lugar> listaLugares;
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
     private RepositorioLugaresImpl repositorioLugares;
     private Lugar lugarEditar;
+    private Lugar lugarAnadir;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +68,6 @@ public class MainActivity extends AppCompatActivity implements VistaLugar.OnLuga
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        System.out.println(id);
         //noinspection SimplifiableIfStatement
         if (id == R.id.acercaDe) {
             NavController navController = Navigation.findNavController(this, R.id.fragmentoLugar);
@@ -79,26 +79,32 @@ public class MainActivity extends AppCompatActivity implements VistaLugar.OnLuga
         }
 
         if(id == R.id.anadir){
-
+            NavController navController = Navigation.findNavController(this, R.id.fragmentoLugar);
+            navController.navigate(R.id.FifthFragment);
         }
 
         if(id == R.id.editarLugar){
             PantallaEditar pantallaEditar = new PantallaEditar();
+           // pantallaEditar.setRepositorioLugares(repositorioLugares);
             Bundle bundle = new Bundle();
             bundle.putSerializable("editarLugar", lugarEditar);
+            pantallaEditar.setArguments(bundle);
+
+            Bundle args = new Bundle();
+            args.putSerializable("repositorio", repositorioLugares);
+            pantallaEditar.getArguments().putAll(args);
+
             pantallaEditar.setArguments(bundle);
             NavController navController = Navigation.findNavController(this, R.id.fragmentoLugar);
             navController.navigate(R.id.ThirdFragment, bundle);
         }
 
-        if(id == R.id.confirmarEdit){
-            repositorioLugares.editarLugar(lugarEditar);
-        }
+
 
         if(id == R.id.eliminarLugar){
             repositorioLugares.eliminarLugar(lugarEditar.getId());
-            NavController navController = Navigation.findNavController(this, R.id.fragmentoLugar);
-            navController.navigate(R.id.FirstFragment);
+            //NavController navController = Navigation.findNavController(this, R.id.fragmentoLugar);
+            //navController.navigate(R.id.FirstFragment);
         }
 
         return super.onOptionsItemSelected(item);
@@ -116,11 +122,10 @@ public class MainActivity extends AppCompatActivity implements VistaLugar.OnLuga
     public void onLugarChanged(Lugar lugar) {
         this.lugarEditar = lugar;
     }
-/*
+
     @Override
-    public void setListaLugares(ArrayList<Lugar> listaLugares) {
-        this.listaLugares = listaLugares;
+    public void inyectarLugarAnadir(Lugar lugar) {
+        this.lugarAnadir = lugar;
     }
- */
 
 }

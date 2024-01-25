@@ -15,8 +15,6 @@ import com.example.miapp.Modelo.TipoLugar;
 import java.util.ArrayList;
 
 public class ConexionBBDD extends SQLiteOpenHelper implements RepositorioLugares {
-
-    private int idIncrementar = 0;
     private static final String NOMBRE_BD = "lugares";
     private static final int VERSION_BD = 1;
 
@@ -175,7 +173,6 @@ public class ConexionBBDD extends SQLiteOpenHelper implements RepositorioLugares
     @Override
     public void editarLugar(Lugar lugar) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Log.d("VER ID", lugar.toString());
         ContentValues values = new ContentValues();
         values.put(nombre, lugar.getNombre());
         values.put(direccion, lugar.getDireccion());
@@ -198,6 +195,7 @@ public class ConexionBBDD extends SQLiteOpenHelper implements RepositorioLugares
     public void eliminarLugar(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLA_LUGARES, COL_ID + " = ?", new String[]{String.valueOf(id)});
+        Log.d("ELIMINADO", "AL MENOS HA LLEGADO");
         db.close();
     }
 

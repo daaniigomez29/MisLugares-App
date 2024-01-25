@@ -1,13 +1,12 @@
 package com.example.miapp;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,8 +20,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.miapp.Modelo.Lugar;
-import com.example.miapp.Modelo.TipoLugar;
-import com.example.miapp.Repository.Impl.RepositorioLugaresImpl;
+import com.example.miapp.databinding.FragmentPantallaAnadirBinding;
 import com.example.miapp.databinding.FragmentPantallaEditarBinding;
 
 import java.text.ParseException;
@@ -30,10 +28,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class PantallaEditar extends Fragment {
 
-    FragmentPantallaEditarBinding binding;
-    private RepositorioLugaresImpl repositorioLugares;
+public class PantallaAnadir extends Fragment {
+
+    public interface OnPantallaAnadirChangeListener {
+        void inyectarLugarAnadir(Lugar lugar);
+    }
+
+    OnPantallaAnadirChangeListener onPantallaAnadirChangeListener;
+    FragmentPantallaAnadirBinding binding;
     private TextView nombreLugar;
     private TextView tipoLugar;
     private ImageView iconoLugar;
@@ -46,42 +49,16 @@ public class PantallaEditar extends Fragment {
     private ImageView imagen;
     private Lugar lugar;
     private String fechaAEditar = "";
-
-
-    public PantallaEditar() {
+    public PantallaAnadir() {
         // Required empty public constructor
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if(id == R.id.confirmarEdit){
-            lugar.setNombre(nombreLugar.getText().toString());
-            if(tipoLugar.getText().toString().equals("Kebab")){
-                lugar.setTipoLugar(TipoLugar.KEBAB);
-            } else if(tipoLugar.getText().toString().equals("Game")){
-                lugar.setTipoLugar(TipoLugar.GAME);
-            } else if(tipoLugar.getText().toString().equals("Mcdonalds")){
-                lugar.setTipoLugar(TipoLugar.MCDONALDS);
-            }
-            lugar.setDireccion(direccion.getText().toString());
-            lugar.setTelefono(Integer.parseInt(telefono.getText().toString()));
-            lugar.setUrl(url.getText().toString());
-            lugar.setComentario(comentario.getText().toString());
-            lugar.setFecha(fechaAEditar);
-            lugar.setValoracion(ratingBar.getRating());
-            Log.d("Comprobar datos lugares", lugar.toString());
-                repositorioLugares.editarLugar(lugar);
-                VistaLugar vistaLugar = new VistaLugar();
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("lugar", lugar);
-                vistaLugar.setArguments(bundle);
-            NavController navController = Navigation.findNavController(requireView());
-            navController.popBackStack(R.id.SecondFragment, false);
+        if(id == R.id.confirmarAnadir){
 
-            //navController.navigate(R.id.SecondFragment, bundle);
-                //NavController navController = Navigation.findNavController(requireActivity(), R.id.fragmentoLugar);
-                //navController.navigate(R.id.SecondFragment, bundle);
         }
 
         return super.onOptionsItemSelected(item);
@@ -89,30 +66,27 @@ public class PantallaEditar extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_editar, menu);
+        inflater.inflate(R.menu.menu_anadir, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    public static PantallaEditar newInstance(String param1, String param2) {
-        PantallaEditar fragment = new PantallaEditar();
+    public static PantallaAnadir newInstance(String param1, String param2) {
+        PantallaAnadir fragment = new PantallaAnadir();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentPantallaEditarBinding.inflate(inflater, container, false);
+        binding = FragmentPantallaAnadirBinding.inflate(inflater, container, false);
         nombreLugar = binding.getRoot().findViewById(R.id.nombreLugar);
         tipoLugar = binding.getRoot().findViewById(R.id.tipoLugar);
         iconoLugar = binding.getRoot().findViewById(R.id.iconoLugar);
@@ -124,38 +98,20 @@ public class PantallaEditar extends Fragment {
         ratingBar = binding.getRoot().findViewById(R.id.ratingBar);
         imagen = binding.getRoot().findViewById(R.id.foto);
 
-        Bundle args = getArguments();
-        if(args != null && args.containsKey("editarLugar") && args.containsKey("repositorio")){
-            repositorioLugares = (RepositorioLugaresImpl) args.getSerializable("repositorio");
-            lugar = (Lugar) args.getSerializable("editarLugar");
-            nombreLugar.setText(lugar.getNombre());
-            tipoLugar.setText(lugar.getTipoLugar().getNombre());
-            iconoLugar.setImageResource(lugar.getTipoLugar().getImagen());
-            direccion.setText(lugar.getDireccion());
-            telefono.setText(String.valueOf(lugar.getTelefono()));
-            url.setText(lugar.getUrl());
-            comentario.setText(lugar.getComentario());
-            fecha.setText(lugar.getFecha());
-            fechaAEditar = lugar.getFecha();
-            ratingBar.setRating(lugar.getValoracion());
-            imagen.setImageResource(lugar.getFoto());
-        }
-
         fecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               fechaAEditar = mostrarDatePickerDialog();
+                fechaAEditar = mostrarDatePickerDialog();
 
             }
         });
+
 
         return binding.getRoot();
     }
 
     private String mostrarDatePickerDialog() {
-        // Obtener la fecha actual
-        String fechaString = String.valueOf(fecha.getText());
-        final Calendar calendario = obtenerCalendarDesdeString(fechaString);
+        final Calendar calendario = Calendar.getInstance();
         int año = calendario.get(Calendar.YEAR);
         int mes = calendario.get(Calendar.MONTH);
         int dia = calendario.get(Calendar.DAY_OF_MONTH);
@@ -196,18 +152,19 @@ public class PantallaEditar extends Fragment {
         return calendar;
     }
 
-    private void confirmarEdicion(Bundle bundle) {
-        // Guardar los cambios, actualizar el lugar, etc.
-
-        // Limpiar la pila de retroceso para eliminar la pantalla de edición
-        NavController navController = Navigation.findNavController(requireView());
-        navController.popBackStack(R.id.ThirdFragment, false);
-
-        // Navegar de nuevo a la lista de lugares
-        navController.navigate(R.id.FirstFragment, bundle);
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            onPantallaAnadirChangeListener = (PantallaAnadir.OnPantallaAnadirChangeListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " debe implementar");
+        }
     }
 
-    public void setRepositorioLugares(RepositorioLugaresImpl repositorioLugares) {
-        this.repositorioLugares = repositorioLugares;
+    private void inyectarLugar() {
+        if (onPantallaAnadirChangeListener != null) {
+            onPantallaAnadirChangeListener.inyectarLugarAnadir(lugar);
+        }
     }
 }
