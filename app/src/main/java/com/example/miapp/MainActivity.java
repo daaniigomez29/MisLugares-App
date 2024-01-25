@@ -97,6 +97,8 @@ public class MainActivity extends AppCompatActivity implements VistaLugar.OnLuga
 
         if(id == R.id.eliminarLugar){
             repositorioLugares.eliminarLugar(lugarEditar.getId());
+            NavController navController = Navigation.findNavController(this, R.id.fragmentoLugar);
+            navController.navigate(R.id.FirstFragment);
         }
 
         return super.onOptionsItemSelected(item);
