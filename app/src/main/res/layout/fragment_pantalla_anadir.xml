@@ -31,15 +31,16 @@
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:src="@drawable/kebab" />
+                android:src="@drawable/carrito" />
 
-            <EditText
+            <Spinner
                 android:id="@+id/tipoLugar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:entries="@array/opciones_array"
                 android:layout_gravity="center"
-                android:layout_weight="1"
-                android:hint="Tipo de lugar" />
+                android:prompt="@string/seleccionar_opcion"
+                android:layout_weight="1" />
         </LinearLayout>
 
         <LinearLayout

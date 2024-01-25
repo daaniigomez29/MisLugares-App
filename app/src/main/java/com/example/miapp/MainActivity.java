@@ -5,9 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.navigation.NavController;
-import androidx.navigation.NavHost;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
@@ -79,8 +77,13 @@ public class MainActivity extends AppCompatActivity implements VistaLugar.OnLuga
         }
 
         if(id == R.id.anadir){
+            PantallaAnadir pantallaAnadir = new PantallaAnadir();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("repositorio", repositorioLugares);
+            pantallaAnadir.setArguments(bundle);
+
             NavController navController = Navigation.findNavController(this, R.id.fragmentoLugar);
-            navController.navigate(R.id.FifthFragment);
+            navController.navigate(R.id.FifthFragment, bundle);
         }
 
         if(id == R.id.editarLugar){

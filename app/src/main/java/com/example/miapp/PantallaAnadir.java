@@ -13,20 +13,27 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.miapp.Modelo.Lugar;
+import com.example.miapp.Modelo.TipoLugar;
+import com.example.miapp.Repository.Impl.RepositorioLugaresImpl;
 import com.example.miapp.databinding.FragmentPantallaAnadirBinding;
 import com.example.miapp.databinding.FragmentPantallaEditarBinding;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 
 public class PantallaAnadir extends Fragment {
@@ -35,10 +42,13 @@ public class PantallaAnadir extends Fragment {
         void inyectarLugarAnadir(Lugar lugar);
     }
 
+    private RepositorioLugaresImpl repositorioLugares;
     OnPantallaAnadirChangeListener onPantallaAnadirChangeListener;
     FragmentPantallaAnadirBinding binding;
     private TextView nombreLugar;
-    private TextView tipoLugar;
+    private Spinner tipoLugar;
+    private TipoLugar tipoLugarClass;
+    private String opcionSeleccionada;
     private ImageView iconoLugar;
     private TextView direccion;
     private TextView telefono;
@@ -58,7 +68,24 @@ public class PantallaAnadir extends Fragment {
         int id = item.getItemId();
 
         if(id == R.id.confirmarAnadir){
+            String nombre = nombreLugar.getText().toString();
 
+            if(opcionSeleccionada.equals("Kebab")){
+                tipoLugarClass = TipoLugar.KEBAB;
+            } else if(opcionSeleccionada.equals("Game")){
+                tipoLugarClass = TipoLugar.GAME;
+            } else if(opcionSeleccionada.equals("Mcdonalds")){
+                tipoLugarClass = TipoLugar.MCDONALDS;
+            }
+            String direc = direccion.getText().toString();
+            int tlf = Integer.parseInt(telefono.getText().toString());
+            int foto = imagen.getId();
+            String link = url.getText().toString();
+            String coment = comentario.getText().toString();
+            String fecha = fechaAEditar;
+            float valor = ratingBar.getRating();
+            lugar = new Lugar(nombre, direc, tlf, foto, link, coment, fecha, valor, tipoLugarClass);
+            repositorioLugares.anadirLugar(lugar);
         }
 
         return super.onOptionsItemSelected(item);
@@ -87,8 +114,34 @@ public class PantallaAnadir extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentPantallaAnadirBinding.inflate(inflater, container, false);
+        Bundle bundle = getArguments();
+        if(bundle != null && bundle.containsKey("repositorio")){
+            repositorioLugares = (RepositorioLugaresImpl) bundle.getSerializable("repositorio");
+        }
         nombreLugar = binding.getRoot().findViewById(R.id.nombreLugar);
         tipoLugar = binding.getRoot().findViewById(R.id.tipoLugar);
+
+        // Lista de opciones para el Spinner
+        List<String> opciones = Arrays.asList("Game", "Kebab", "Mcdonalds");
+        // Crear un ArrayAdapter desde la lista de opciones
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_item, opciones);
+        // Especificar el layout para las opciones al desplegar el Spinner
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Asignar el ArrayAdapter al Spinner
+        tipoLugar.setAdapter(adapter);
+
+        tipoLugar.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                // Manejar la selección
+                opcionSeleccionada = parentView.getItemAtPosition(position).toString();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // Acciones cuando no se selecciona nada (si es necesario)
+            }
+        });
+
         iconoLugar = binding.getRoot().findViewById(R.id.iconoLugar);
         direccion = binding.getRoot().findViewById(R.id.direccion);
         telefono =  binding.getRoot().findViewById(R.id.telefono);
