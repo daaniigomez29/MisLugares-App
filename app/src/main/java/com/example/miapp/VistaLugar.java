@@ -38,6 +38,8 @@
 
         private TextView direccion;
         private TextView telefono;
+        private TextView longitud;
+        private TextView latitud;
         private TextView url;
         private TextView comentario;
         private TextView fecha;
@@ -80,6 +82,8 @@
             iconoLugar = binding.getRoot().findViewById(R.id.iconoLugar);
             direccion = binding.getRoot().findViewById(R.id.direccion);
             telefono =  binding.getRoot().findViewById(R.id.telefono);
+            longitud = binding.getRoot().findViewById(R.id.longitud);
+            latitud = binding.getRoot().findViewById(R.id.latitud);
             url = binding.getRoot().findViewById(R.id.url);
             comentario = binding.getRoot().findViewById(R.id.comentario);
             fecha = binding.getRoot().findViewById(R.id.fecha);
@@ -97,6 +101,8 @@
                 iconoLugar.setImageResource(lugar.getTipoLugar().getImagen());
                 direccion.setText(lugar.getDireccion());
                 telefono.setText(String.valueOf(lugar.getTelefono()));
+                longitud.setText(String.valueOf(lugar.getPosicion().getLongitud()));
+                latitud.setText(String.valueOf(lugar.getPosicion().getLatitud()));
                 url.setText(lugar.getUrl());
                 comentario.setText(lugar.getComentario());
                 fecha.setText(lugar.getFecha());

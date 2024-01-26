@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Nombre lugar"
+            android:hint="Nombre lugar"
             android:textSize="24sp" />
 
 
@@ -83,6 +83,34 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:hint="Teléfono" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/logoGeo"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:src="@drawable/geo" />
+
+            <EditText
+                android:id="@+id/longitud"
+                android:layout_width="230dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:hint="Longitud" />
+            <EditText
+                android:id="@+id/latitud"
+                android:layout_width="230dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:hint="Latitud" />
         </LinearLayout>
 
         <LinearLayout

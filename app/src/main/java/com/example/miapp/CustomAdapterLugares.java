@@ -1,6 +1,7 @@
 package com.example.miapp;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ public class CustomAdapterLugares extends ArrayAdapter<Lugar> {
         TextView nombre = view.findViewById(R.id.nombreLugar);
         RatingBar ratingBar = view.findViewById(R.id.valoracion);
 
+        Log.d("Lugar CAL", a.toString());
         imagen.setImageResource(a.getFoto());
         nombre.setText(a.getNombre());
         ratingBar.setRating(a.getValoracion());

@@ -18,11 +18,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.miapp.Modelo.GeoPunto;
 import com.example.miapp.Modelo.Lugar;
 import com.example.miapp.Modelo.TipoLugar;
 import com.example.miapp.Repository.Impl.RepositorioLugaresImpl;
@@ -39,14 +41,16 @@ public class PantallaEditar extends Fragment {
 
     FragmentPantallaEditarBinding binding;
     private RepositorioLugaresImpl repositorioLugares;
-    private TextView nombreLugar;
+    private EditText nombreLugar;
     private Spinner tipoLugar;
     String opcionSeleccionada;
     private ImageView iconoLugar;
-    private TextView direccion;
-    private TextView telefono;
-    private TextView url;
-    private TextView comentario;
+    private EditText direccion;
+    private EditText telefono;
+    private EditText longitud;
+    private EditText latitud;
+    private EditText url;
+    private EditText comentario;
     private Button fecha;
     private RatingBar ratingBar;
     private ImageView imagen;
@@ -62,27 +66,12 @@ public class PantallaEditar extends Fragment {
         int id = item.getItemId();
 
         if(id == R.id.confirmarEdit){
-            lugar.setNombre(nombreLugar.getText().toString());
-            if(opcionSeleccionada.equals("Kebab")){
-                lugar.setTipoLugar(TipoLugar.KEBAB);
-            } else if(opcionSeleccionada.equals("Game")){
-                lugar.setTipoLugar(TipoLugar.GAME);
-            } else if(opcionSeleccionada.equals("Mcdonalds")){
-                lugar.setTipoLugar(TipoLugar.MCDONALDS);
-            }
-
-            lugar.setDireccion(direccion.getText().toString());
-            lugar.setTelefono(Integer.parseInt(telefono.getText().toString()));
-            lugar.setUrl(url.getText().toString());
-            lugar.setComentario(comentario.getText().toString());
-            lugar.setFecha(fechaAEditar);
-            lugar.setValoracion(ratingBar.getRating());
-            Log.d("Comprobar datos lugares", lugar.toString());
-                repositorioLugares.editarLugar(lugar);
-                VistaLugar vistaLugar = new VistaLugar();
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("lugar", lugar);
-                vistaLugar.setArguments(bundle);
+            lugar = obtenerDatos(lugar);
+            repositorioLugares.editarLugar(lugar);
+            VistaLugar vistaLugar = new VistaLugar();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("lugar", lugar);
+            vistaLugar.setArguments(bundle);
             NavController navController = Navigation.findNavController(requireView());
             navController.popBackStack(R.id.SecondFragment, false);
 
@@ -139,6 +128,8 @@ public class PantallaEditar extends Fragment {
         iconoLugar = binding.getRoot().findViewById(R.id.iconoLugar);
         direccion = binding.getRoot().findViewById(R.id.direccion);
         telefono =  binding.getRoot().findViewById(R.id.telefono);
+        longitud =  binding.getRoot().findViewById(R.id.longitud);
+        latitud =  binding.getRoot().findViewById(R.id.latitud);
         url = binding.getRoot().findViewById(R.id.url);
         comentario = binding.getRoot().findViewById(R.id.comentario);
         fecha = binding.getRoot().findViewById(R.id.botonFecha);
@@ -170,6 +161,8 @@ public class PantallaEditar extends Fragment {
             iconoLugar.setImageResource(lugar.getTipoLugar().getImagen());
             direccion.setText(lugar.getDireccion());
             telefono.setText(String.valueOf(lugar.getTelefono()));
+            longitud.setText(String.valueOf(lugar.getPosicion().getLongitud()));
+            latitud.setText(String.valueOf(lugar.getPosicion().getLatitud()));
             url.setText(lugar.getUrl());
             comentario.setText(lugar.getComentario());
             fecha.setText(lugar.getFecha());
@@ -233,15 +226,27 @@ public class PantallaEditar extends Fragment {
         return calendar;
     }
 
-    private void confirmarEdicion(Bundle bundle) {
-        // Guardar los cambios, actualizar el lugar, etc.
+    public Lugar obtenerDatos(Lugar lugar) {
+        lugar.setNombre(nombreLugar.getText().toString());
+        if(opcionSeleccionada.equals("Kebab")){
+            lugar.setTipoLugar(TipoLugar.KEBAB);
+        } else if(opcionSeleccionada.equals("Game")){
+            lugar.setTipoLugar(TipoLugar.GAME);
+        } else if(opcionSeleccionada.equals("Mcdonalds")){
+            lugar.setTipoLugar(TipoLugar.MCDONALDS);
+        }
 
-        // Limpiar la pila de retroceso para eliminar la pantalla de edición
-        NavController navController = Navigation.findNavController(requireView());
-        navController.popBackStack(R.id.ThirdFragment, false);
-
-        // Navegar de nuevo a la lista de lugares
-        navController.navigate(R.id.FirstFragment, bundle);
+        lugar.setDireccion(direccion.getText().toString());
+        lugar.setTelefono(Integer.parseInt(telefono.getText().toString()));
+        Double longi = Double.parseDouble(longitud.getText().toString());
+        Double lat = Double.parseDouble(latitud.getText().toString());
+        GeoPunto geoPunto = new GeoPunto(longi, lat);
+        lugar.setPosicion(geoPunto);
+        lugar.setUrl(url.getText().toString());
+        lugar.setComentario(comentario.getText().toString());
+        lugar.setFecha(fechaAEditar);
+        lugar.setValoracion(ratingBar.getRating());
+        return lugar;
     }
 
     public void setRepositorioLugares(RepositorioLugaresImpl repositorioLugares) {

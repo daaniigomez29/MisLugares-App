@@ -48,6 +48,7 @@ public class PantallaInicio extends Fragment {
         binding = PantallaInicioBinding.inflate(inflater, container, false);
 
         listaLugares = repositorioLugares.getAll();
+
         Log.d("Vuelvo", "Vuelvo despues de eliminar");
         listViewLugares = binding.getRoot().findViewById(R.id.listViewLugares);
         customAdapterLugares = new CustomAdapterLugares(requireActivity(), listaLugares);

@@ -79,12 +79,14 @@ public class PantallaAnadir extends Fragment {
             }
             String direc = direccion.getText().toString();
             int tlf = Integer.parseInt(telefono.getText().toString());
-            int foto = imagen.getId();
+            String nombreImagen = getResources().getResourceName(imagen.getId());
+            int idImagen = getResources().getIdentifier(nombreImagen, "drawable",getActivity().getPackageName());
+            //int foto = Integer.parseInt(imagen.getDrawable().toString());
             String link = url.getText().toString();
             String coment = comentario.getText().toString();
             String fecha = fechaAEditar;
             float valor = ratingBar.getRating();
-            lugar = new Lugar(nombre, direc, tlf, foto, link, coment, fecha, valor, tipoLugarClass);
+            lugar = new Lugar(nombre, direc, tlf, idImagen, link, coment, fecha, valor, tipoLugarClass);
             repositorioLugares.anadirLugar(lugar);
         }
 
