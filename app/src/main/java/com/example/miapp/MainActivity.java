@@ -1,5 +1,7 @@
 package com.example.miapp;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements VistaLugar.OnLuga
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        String temaSeleccionado = obtenerTemaSeleccionado();
+
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -73,7 +77,8 @@ public class MainActivity extends AppCompatActivity implements VistaLugar.OnLuga
         }
 
         if(id == R.id.preferencias){
-
+            NavController navController = Navigation.findNavController(this, R.id.fragmentoLugar);
+            navController.navigate(R.id.SixthFragment);
         }
 
         if(id == R.id.anadir){
@@ -121,6 +126,19 @@ public class MainActivity extends AppCompatActivity implements VistaLugar.OnLuga
     @Override
     public void inyectarLugarAnadir(Lugar lugar) {
         this.lugarAnadir = lugar;
+    }
+
+    private String obtenerTemaSeleccionado() {
+        SharedPreferences sharedPreferences = getSharedPreferences("ConfiguracionApp", Context.MODE_PRIVATE);
+        return sharedPreferences.getString("temaSeleccionado", "temaPorDefecto");
+    }
+
+    private void aplicarTema(String tema) {
+        if (tema.equals("temaOscuro")) {
+            setTheme(R.style.TemaOscuro);
+        } else {
+            setTheme(R.style.TemaPorDefecto);
+        }
     }
 
 }

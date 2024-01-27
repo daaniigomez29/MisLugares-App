@@ -70,4 +70,14 @@
             android:id="@+id/action_FifthFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/SixthFragment"
+        android:name="com.example.miapp.Preferencias"
+        android:label="Preferencias"
+        tools:layout="@layout/fragment_preferencias">
+
+        <action
+            android:id="@+id/action_SixthFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+    </fragment>
 </navigation>

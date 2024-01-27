@@ -64,6 +64,10 @@
                 navController.navigate(R.id.FirstFragment);
             }
 
+            if(id == R.id.iconoGeoPunto){
+
+            }
+
             return super.onOptionsItemSelected(item);
         }
 

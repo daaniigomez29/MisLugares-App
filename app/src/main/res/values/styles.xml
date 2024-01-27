@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Atributos comunes a ambos temas -->
+    </style>
+    <style name="TemaOscuro" parent="Theme.AppCompat">
+        <item name="colorPrimary">#212121</item> <!-- Color primario oscuro -->
+        <item name="colorPrimaryDark">#000000</item> <!-- Color primario oscuro -->
+        <item name="colorAccent">#FF4081</item>
+    </style>
+
+    <style name="TemaPorDefecto" parent="Theme.AppCompat">
+        <!-- Define los atributos del tema por defecto aquí -->
+    </style>
+</resources>
