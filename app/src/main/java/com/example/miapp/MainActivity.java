@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements VistaLugar.OnLuga
     private RepositorioLugaresImpl repositorioLugares;
     private Lugar lugarEditar;
     private Lugar lugarAnadir;
+    private boolean cambiarTemaOscuro = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,8 +135,8 @@ public class MainActivity extends AppCompatActivity implements VistaLugar.OnLuga
         return sharedPreferences.getString("temaSeleccionado", "temaPorDefecto");
     }
 
-    private void aplicarTema(String tema) {
-        if (tema.equals("temaOscuro")) {
+    private void aplicarTema(boolean temaOscuro) {
+        if (temaOscuro) {
             setTheme(R.style.TemaOscuro);
         } else {
             setTheme(R.style.TemaPorDefecto);
