@@ -47,6 +47,7 @@ public class PantallaInicio extends Fragment {
     ) {
         binding = PantallaInicioBinding.inflate(inflater, container, false);
 
+        repositorioLugares = ((Aplicacion) getActivity().getApplication()).repositorioLugares;
         listaLugares = repositorioLugares.getAll();
 
         Log.d("Vuelvo", "Vuelvo despues de eliminar");
@@ -70,13 +71,6 @@ public class PantallaInicio extends Fragment {
     }
 
     @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        // Asociar el fragmento a la actividad y obtener el contexto aquí
-        repositorioLugares = new RepositorioLugaresImpl(requireContext());
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
@@ -89,11 +83,6 @@ public class PantallaInicio extends Fragment {
         //Pasar datos del lugar al fragmento
         Bundle bundle = new Bundle();
         bundle.putSerializable("lugar", lugarSeleccionado);
-        vistaLugar.setArguments(bundle);
-
-        Bundle args = new Bundle();
-        args.putSerializable("repositorio", repositorioLugares);
-        vistaLugar.getArguments().putAll(args);
         vistaLugar.setArguments(bundle);
 
         //Reemplazar fragmentos

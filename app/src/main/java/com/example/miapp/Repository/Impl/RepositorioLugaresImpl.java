@@ -19,7 +19,6 @@ public class RepositorioLugaresImpl implements RepositorioLugares, Serializable{
     public RepositorioLugaresImpl(Context context){
         this.context = context;
         conexionBBDD = new ConexionBBDD(context);
-        insertarDatos();
     }
     @Override
     public ArrayList<Lugar> getAll() {

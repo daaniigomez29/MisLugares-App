@@ -194,9 +194,14 @@ public class ConexionBBDD extends SQLiteOpenHelper implements RepositorioLugares
     @Override
     public void eliminarLugar(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLA_LUGARES, COL_ID + " = ?", new String[]{String.valueOf(id)});
-        Log.d("ELIMINADO", "AL MENOS HA LLEGADO");
-        db.close();
+        try {
+            db.delete(TABLA_LUGARES, COL_ID + " = ?", new String[]{String.valueOf(id)});
+            Log.d("ELIMINADO", "Lugar eliminado correctamente. ID: " + id);
+        } catch (Exception e) {
+            Log.e("ELIMINADO", "Error al eliminar el lugar. ID: " + id, e);
+        } finally {
+            db.close();
+        }
     }
 
     public void limpiarTablaLugares() {

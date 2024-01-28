@@ -78,8 +78,8 @@
                 LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState
         ) {
-
             binding = VistaLugarBinding.inflate(inflater, container, false);
+            repositorioLugares = ((Aplicacion) getActivity().getApplication()).repositorioLugares;
             setHasOptionsMenu(true);
             nombreLugar = binding.getRoot().findViewById(R.id.nombreLugar);
             tipoLugar = binding.getRoot().findViewById(R.id.tipoLugar);
@@ -97,9 +97,8 @@
 
 
             Bundle args = getArguments();
-            if(args != null && args.containsKey("lugar") && args.containsKey("repositorio")){
+            if(args != null && args.containsKey("lugar")){
                 lugar = (Lugar) args.getSerializable("lugar");
-                repositorioLugares = (RepositorioLugaresImpl) args.getSerializable("repositorio");
                 nombreLugar.setText(lugar.getNombre());
                 tipoLugar.setText(lugar.getTipoLugar().getNombre());
                 iconoLugar.setImageResource(lugar.getTipoLugar().getImagen());

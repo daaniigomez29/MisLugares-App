@@ -75,15 +75,7 @@ public class PantallaEditar extends Fragment {
             NavController navController = Navigation.findNavController(requireView());
             navController.popBackStack(R.id.SecondFragment, false);
 
-            //navController.navigate(R.id.SecondFragment, bundle);
-                //NavController navController = Navigation.findNavController(requireActivity(), R.id.fragmentoLugar);
-                //navController.navigate(R.id.SecondFragment, bundle);
         }
-
-        if(id == R.id.eliminarLugar){
-            repositorioLugares.eliminarLugar(lugar.getId());
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -93,26 +85,17 @@ public class PantallaEditar extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    public static PantallaEditar newInstance(String param1, String param2) {
-        PantallaEditar fragment = new PantallaEditar();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentPantallaEditarBinding.inflate(inflater, container, false);
+        repositorioLugares = ((Aplicacion) getActivity().getApplication()).repositorioLugares;
         nombreLugar = binding.getRoot().findViewById(R.id.nombreLugar);
         tipoLugar = binding.getRoot().findViewById(R.id.tipoLugar);
 
@@ -137,8 +120,7 @@ public class PantallaEditar extends Fragment {
         imagen = binding.getRoot().findViewById(R.id.foto);
 
         Bundle args = getArguments();
-        if(args != null && args.containsKey("editarLugar") && args.containsKey("repositorio")){
-            repositorioLugares = (RepositorioLugaresImpl) args.getSerializable("repositorio");
+        if(args != null && args.containsKey("editarLugar")){
             lugar = (Lugar) args.getSerializable("editarLugar");
             nombreLugar.setText(lugar.getNombre());
             // Establecer el valor deseado en el Spinner (por ejemplo, "Game")
@@ -247,9 +229,5 @@ public class PantallaEditar extends Fragment {
         lugar.setFecha(fechaAEditar);
         lugar.setValoracion(ratingBar.getRating());
         return lugar;
-    }
-
-    public void setRepositorioLugares(RepositorioLugaresImpl repositorioLugares) {
-        this.repositorioLugares = repositorioLugares;
     }
 }

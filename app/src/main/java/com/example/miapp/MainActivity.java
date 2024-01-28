@@ -24,14 +24,12 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements VistaLugar.OnLugarChangeListener, PantallaAnadir.OnPantallaAnadirChangeListener {
+public class MainActivity extends AppCompatActivity implements VistaLugar.OnLugarChangeListener{
 
-    private ArrayList<Lugar> listaLugares;
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
     private RepositorioLugaresImpl repositorioLugares;
     private Lugar lugarEditar;
-    private Lugar lugarAnadir;
     private boolean cambiarTemaOscuro = false;
 
 
@@ -45,19 +43,12 @@ public class MainActivity extends AppCompatActivity implements VistaLugar.OnLuga
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        repositorioLugares = new RepositorioLugaresImpl(this);
+        repositorioLugares = ((Aplicacion) getApplication()).repositorioLugares;
 
         setSupportActionBar(binding.toolbar);
         NavController navController = Navigation.findNavController(this, R.id.fragmentoLugar);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-
-        /*
-
-        NavController navController = Navigation.findNavController(this, R.id.fragmentoLugar);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-
-         */
     }
 
     @Override
@@ -86,27 +77,16 @@ public class MainActivity extends AppCompatActivity implements VistaLugar.OnLuga
         }
 
         if(id == R.id.anadir){
-            PantallaAnadir pantallaAnadir = new PantallaAnadir();
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("repositorio", repositorioLugares);
-            pantallaAnadir.setArguments(bundle);
-
             NavController navController = Navigation.findNavController(this, R.id.fragmentoLugar);
-            navController.navigate(R.id.FifthFragment, bundle);
+            navController.navigate(R.id.FifthFragment);
         }
 
         if(id == R.id.editarLugar){
             PantallaEditar pantallaEditar = new PantallaEditar();
-           // pantallaEditar.setRepositorioLugares(repositorioLugares);
             Bundle bundle = new Bundle();
             bundle.putSerializable("editarLugar", lugarEditar);
             pantallaEditar.setArguments(bundle);
 
-            Bundle args = new Bundle();
-            args.putSerializable("repositorio", repositorioLugares);
-            pantallaEditar.getArguments().putAll(args);
-
-            pantallaEditar.setArguments(bundle);
             NavController navController = Navigation.findNavController(this, R.id.fragmentoLugar);
             navController.navigate(R.id.ThirdFragment, bundle);
         }
@@ -125,11 +105,6 @@ public class MainActivity extends AppCompatActivity implements VistaLugar.OnLuga
     @Override
     public void onLugarChanged(Lugar lugar) {
         this.lugarEditar = lugar;
-    }
-
-    @Override
-    public void inyectarLugarAnadir(Lugar lugar) {
-        this.lugarAnadir = lugar;
     }
 
     private String obtenerTemaSeleccionado() {

@@ -38,12 +38,7 @@ import java.util.List;
 
 public class PantallaAnadir extends Fragment {
 
-    public interface OnPantallaAnadirChangeListener {
-        void inyectarLugarAnadir(Lugar lugar);
-    }
-
     private RepositorioLugaresImpl repositorioLugares;
-    OnPantallaAnadirChangeListener onPantallaAnadirChangeListener;
     FragmentPantallaAnadirBinding binding;
     private TextView nombreLugar;
     private Spinner tipoLugar;
@@ -99,13 +94,6 @@ public class PantallaAnadir extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    public static PantallaAnadir newInstance(String param1, String param2) {
-        PantallaAnadir fragment = new PantallaAnadir();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,10 +104,9 @@ public class PantallaAnadir extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentPantallaAnadirBinding.inflate(inflater, container, false);
-        Bundle bundle = getArguments();
-        if(bundle != null && bundle.containsKey("repositorio")){
-            repositorioLugares = (RepositorioLugaresImpl) bundle.getSerializable("repositorio");
-        }
+
+        repositorioLugares = ((Aplicacion) getActivity().getApplication()).repositorioLugares;
+
         nombreLugar = binding.getRoot().findViewById(R.id.nombreLugar);
         tipoLugar = binding.getRoot().findViewById(R.id.tipoLugar);
 
@@ -205,21 +192,5 @@ public class PantallaAnadir extends Fragment {
         }
 
         return calendar;
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        try {
-            onPantallaAnadirChangeListener = (PantallaAnadir.OnPantallaAnadirChangeListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " debe implementar");
-        }
-    }
-
-    private void inyectarLugar() {
-        if (onPantallaAnadirChangeListener != null) {
-            onPantallaAnadirChangeListener.inyectarLugarAnadir(lugar);
-        }
     }
 }
