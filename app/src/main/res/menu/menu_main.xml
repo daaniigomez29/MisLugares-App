@@ -5,17 +5,17 @@
     <item
         android:id="@+id/acercaDe"
         android:orderInCategory="100"
-        android:title="Acerca de"
+        android:title="@string/label_acerca_fragment"
         app:showAsAction="never" />
     <item
         android:id="@+id/preferencias"
         android:orderInCategory="100"
-        android:title="Preferencias"
+        android:title="@string/label_preferencias_fragment"
         app:showAsAction="never" />
     <item
         android:id="@+id/anadir"
         android:orderInCategory="100"
         android:icon="@drawable/baseline_add_24"
-        android:title="Añadir"
+        android:title="@string/label_anadir_fragment"
         app:showAsAction="always" />
 </menu>

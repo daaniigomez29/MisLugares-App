@@ -5,6 +5,6 @@
         android:id="@+id/confirmarEdit"
         android:orderInCategory="100"
         android:icon="@drawable/baseline_done_24"
-        android:title="Confirmar"
+        android:title="@string/label_confirm"
         app:showAsAction="always" />
 </menu>

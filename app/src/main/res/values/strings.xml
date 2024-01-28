@@ -7,9 +7,22 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="seleccionar_opcion">Kebab</string>
-    <string name="lorem_ipsum">
-
-    </string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="label_primer_fragment">Vista lugares</string>
+    <string name="label_segundo_fragment">Lugar</string>
+    <string name="label_tercer_fragment">Editar lugar</string>
+    <string name="label_anadir_fragment">Añadir lugar</string>
+    <string name="label_acerca_fragment">Acerca de</string>
+    <string name="label_preferencias_fragment">Preferencias</string>
+    <string name="label_tema_oscuro">Tema oscuro</string>
+    <string name="label_delete_button">Eliminar</string>
+    <string name="label_confirm">Confirmar</string>
+    <string name="label_geo">Visitar lugar</string>
+    <string name="label_editName_hint">Nombre lugar</string>
+    <string name="label_editDirection_hint">Dirección</string>
+    <string name="label_editPhone_hint">Teléfono</string>
+    <string name="label_editLength_hint">Longitud</string>
+    <string name="label_editLatitude_hint">Latitud</string>
+    <string name="label_editComment_hint">Comentario</string>
+    <string name="label_editDate_hint">Inserte fecha aquí</string>
+    <string name="text_about">Aplicación creada para fines educativos..</string>
 </resources>

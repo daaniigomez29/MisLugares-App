@@ -7,18 +7,18 @@
         android:id="@+id/iconoGeoPunto"
         android:orderInCategory="100"
         android:icon="@drawable/geo"
-        android:title="Eliminar"
+        android:title="@string/label_geo"
         app:showAsAction="always" />
     <item
         android:id="@+id/editarLugar"
         android:orderInCategory="100"
         android:icon="@drawable/boton_editar"
-        android:title="editar"
+        android:title="@string/label_tercer_fragment"
         app:showAsAction="always" />
     <item
         android:id="@+id/eliminarLugar"
         android:orderInCategory="100"
         android:icon="@drawable/baseline_delete_24"
-        android:title="Eliminar"
+        android:title="@string/label_delete_button"
         app:showAsAction="always" />
 </menu>

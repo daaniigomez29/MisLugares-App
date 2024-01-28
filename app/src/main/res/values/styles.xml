@@ -3,11 +3,13 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Atributos comunes a ambos temas -->
     </style>
-    <style name="TemaOscuro" parent="Theme.AppCompat">
-        <item name="colorPrimary">#212121</item> <!-- Color primario oscuro -->
+    <style name="TemaOscuro" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#212121</item>
         <item name="colorAccent">#0022FD</item>
-        <item name="android:windowBackground">#121111</item> <!-- Fondo de la aplicación -->
+        <item name="android:windowBackground">#121111</item>
         <item name="colorPrimaryDark">#423F3F</item>
+        <item name="android:textColor">#FFFFFF</item>
+
     </style>
 
     <style name="TemaPorDefecto" parent="Theme.AppCompat">

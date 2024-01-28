@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/FirstFragment"
         android:name="com.example.miapp.PantallaInicio"
-        android:label="Vista lugares"
+        android:label="@string/label_primer_fragment"
         app:menu="@menu/menu_main"
         tools:layout="@layout/pantalla_inicio">
 
@@ -22,7 +22,7 @@
     <fragment
         android:id="@+id/SecondFragment"
         android:name="com.example.miapp.VistaLugar"
-        android:label="Lugar"
+        android:label="@string/label_segundo_fragment"
         app:menu="@menu/menu_vista_lugar"
         tools:layout="@layout/vista_lugar">
 
@@ -36,7 +36,7 @@
     <fragment
         android:id="@+id/ThirdFragment"
         android:name="com.example.miapp.PantallaEditar"
-        android:label="Editar lugar"
+        android:label="@string/label_tercer_fragment"
         app:menu="@menu/menu_editar"
         tools:layout="@layout/fragment_pantalla_editar">
 
@@ -47,7 +47,7 @@
     <fragment
         android:id="@+id/FourthFragment"
         android:name="com.example.miapp.FragmentAcercaDe"
-        android:label="Acerca de"
+        android:label="@string/label_acerca_fragment"
         tools:layout="@layout/acercade_layout">
 
         <action
@@ -63,7 +63,7 @@
     <fragment
             android:id="@+id/FifthFragment"
             android:name="com.example.miapp.PantallaAnadir"
-            android:label="Añadir lugar"
+            android:label="@string/label_anadir_fragment"
             tools:layout="@layout/fragment_pantalla_anadir">
 
         <action
@@ -73,7 +73,7 @@
     <fragment
         android:id="@+id/SixthFragment"
         android:name="com.example.miapp.Preferencias"
-        android:label="Preferencias"
+        android:label="@string/label_preferencias_fragment"
         tools:layout="@layout/fragment_preferencias">
 
         <action

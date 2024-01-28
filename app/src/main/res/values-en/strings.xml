@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MiApp</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="seleccionar_opcion">Kebab</string>
+    <string name="label_primer_fragment">Places</string>
+    <string name="label_segundo_fragment">Place</string>
+    <string name="label_tercer_fragment">Edit place</string>
+    <string name="label_anadir_fragment">Add place</string>
+    <string name="label_acerca_fragment">About</string>
+    <string name="label_preferencias_fragment">Preferences</string>
+    <string name="label_tema_oscuro">Dark theme</string>
+    <string name="label_delete_button">Delete</string>
+    <string name="label_confirm">Confirm</string>
+    <string name="label_geo">VIsit place</string>
+    <string name="label_editName_hint">Place name</string>
+    <string name="label_editDirection_hint">Direction</string>
+    <string name="label_editPhone_hint">Phone</string>
+    <string name="label_editLength_hint">Length</string>
+    <string name="label_editLatitude_hint">Latitude</string>
+    <string name="label_editComment_hint">Comment</string>
+    <string name="label_editDate_hint">Insert date here</string>
+    <string name="text_about">Application created for educational purposes.</string>
+</resources>

@@ -47,9 +47,12 @@ public class Preferencias extends Fragment {
         return binding.getRoot();
     }
 
-    private String obtenerTemaSeleccionado() {
+    private void obtenerTemaSeleccionado() {
         SharedPreferences sharedPreferences = requireContext().getSharedPreferences("ConfiguracionApp", Context.MODE_PRIVATE);
-        return sharedPreferences.getString("temaSeleccionado", "temaPorDefecto");
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("usarTemaOscuro", true);
+        editor.apply();
+        ((MainActivity) requireActivity()).aplicarTema(true);
     }
 
     private void aplicarTema(boolean temaOscuro) {

@@ -37,7 +37,9 @@ public class MainActivity extends AppCompatActivity implements VistaLugar.OnLuga
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        String temaSeleccionado = obtenerTemaSeleccionado();
+        //String temaSeleccionado = obtenerTemaSeleccionado();
+        cambiarTemaOscuro = obtenerConfiguracionTema();
+        aplicarTema(cambiarTemaOscuro);
 
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -135,12 +137,18 @@ public class MainActivity extends AppCompatActivity implements VistaLugar.OnLuga
         return sharedPreferences.getString("temaSeleccionado", "temaPorDefecto");
     }
 
-    private void aplicarTema(boolean temaOscuro) {
+    public void aplicarTema(boolean temaOscuro) {
         if (temaOscuro) {
             setTheme(R.style.TemaOscuro);
         } else {
-            setTheme(R.style.TemaPorDefecto);
+
         }
+
+    }
+
+    private boolean obtenerConfiguracionTema() {
+        SharedPreferences sharedPreferences = getSharedPreferences("ConfiguracionApp", Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean("usarTemaOscuro", false);
     }
 
 }
