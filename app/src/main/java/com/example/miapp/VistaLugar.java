@@ -1,6 +1,8 @@
     package com.example.miapp;
 
     import android.content.Context;
+    import android.content.Intent;
+    import android.net.Uri;
     import android.os.Bundle;
     import android.util.Log;
     import android.view.LayoutInflater;
@@ -65,7 +67,7 @@
             }
 
             if(id == R.id.iconoGeoPunto){
-
+                visualizarGeopunto(lugar);
             }
 
             return super.onOptionsItemSelected(item);
@@ -143,6 +145,18 @@
         private void inyectarLugar() {
             if (mListener != null) {
                 mListener.onLugarChanged(lugar);
+            }
+        }
+
+        private void visualizarGeopunto(Lugar lugar) {
+            if (lugar != null && lugar.getPosicion() != null) {
+                // Abre la ubicación en un mapa
+                double latitud = lugar.getPosicion().getLatitud();
+                double longitud = lugar.getPosicion().getLongitud();
+                Uri gmmIntentUri = Uri.parse("geo:" + latitud + "," + longitud + "?z=15");
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                startActivity(mapIntent);
             }
         }
     }

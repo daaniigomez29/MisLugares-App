@@ -28,12 +28,12 @@ public class Lugar implements Serializable {
         this.valoracion = valoracion;
     }
 
-    public Lugar(String nombre, String direccion, int telefono, int foto, String url, String comentario, String fecha, float valoracion, TipoLugar tipoLugar) {
+    public Lugar(String nombre, String direccion, int telefono, GeoPunto posicion, int foto, String url, String comentario, String fecha, float valoracion, TipoLugar tipoLugar) {
         this.id = 0;
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
-        this.posicion = new GeoPunto(0.0,0.0);
+        this.posicion = posicion;
         this.foto = foto;
         this.url = url;
         this.comentario = comentario;

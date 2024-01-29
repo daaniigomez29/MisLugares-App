@@ -17,11 +17,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.miapp.Modelo.GeoPunto;
 import com.example.miapp.Modelo.Lugar;
 import com.example.miapp.Modelo.TipoLugar;
 import com.example.miapp.Repository.Impl.RepositorioLugaresImpl;
@@ -48,6 +50,8 @@ public class PantallaAnadir extends Fragment {
     private TextView direccion;
     private TextView telefono;
     private TextView url;
+    private EditText longitud;
+    private EditText latitud;
     private TextView comentario;
     private Button fecha;
     private RatingBar ratingBar;
@@ -74,6 +78,8 @@ public class PantallaAnadir extends Fragment {
             }
             String direc = direccion.getText().toString();
             int tlf = Integer.parseInt(telefono.getText().toString());
+            double longi = Double.parseDouble(longitud.getText().toString());
+            double lati = Double.parseDouble(latitud.getText().toString());
             String nombreImagen = getResources().getResourceName(imagen.getId());
             int idImagen = getResources().getIdentifier(nombreImagen, "drawable",getActivity().getPackageName());
             //int foto = Integer.parseInt(imagen.getDrawable().toString());
@@ -81,7 +87,7 @@ public class PantallaAnadir extends Fragment {
             String coment = comentario.getText().toString();
             String fecha = fechaAEditar;
             float valor = ratingBar.getRating();
-            lugar = new Lugar(nombre, direc, tlf, idImagen, link, coment, fecha, valor, tipoLugarClass);
+            lugar = new Lugar(nombre, direc, tlf, new GeoPunto(longi,lati), 0, link, coment, fecha, valor, tipoLugarClass);
             repositorioLugares.anadirLugar(lugar);
         }
 
@@ -134,6 +140,8 @@ public class PantallaAnadir extends Fragment {
         iconoLugar = binding.getRoot().findViewById(R.id.iconoLugar);
         direccion = binding.getRoot().findViewById(R.id.direccion);
         telefono =  binding.getRoot().findViewById(R.id.telefono);
+        longitud =  binding.getRoot().findViewById(R.id.longitud);
+        latitud =  binding.getRoot().findViewById(R.id.latitud);
         url = binding.getRoot().findViewById(R.id.url);
         comentario = binding.getRoot().findViewById(R.id.comentario);
         fecha = binding.getRoot().findViewById(R.id.botonFecha);

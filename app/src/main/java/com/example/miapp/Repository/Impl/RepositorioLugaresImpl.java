@@ -2,6 +2,7 @@ package com.example.miapp.Repository.Impl;
 
 import android.content.Context;
 
+import com.example.miapp.Modelo.GeoPunto;
 import com.example.miapp.Modelo.Lugar;
 import com.example.miapp.Modelo.TipoLugar;
 import com.example.miapp.R;
@@ -50,8 +51,8 @@ public class RepositorioLugaresImpl implements RepositorioLugares, Serializable{
 
     public void insertarDatos(){
         conexionBBDD.limpiarTablaLugares();
-        Lugar lugar1=new Lugar("Chipiona","C/ Playa de Regla",111, R.drawable.kebab_sitio,"https://maps.app.goo.gl/UymTwpkZpCJv1zpG6","Playa de regla de chipiona","2024/01/24",4.4f, TipoLugar.KEBAB);
-        Lugar lugar2=new Lugar("CLub de alterne","C/ Playa de Regla",111,R.drawable.game_arcos,"https://maps.app.goo.gl/UymTwpkZpCJv1zpG6","Playa de regla de chipiona","2024/01/24",1.5f,TipoLugar.GAME);
+        Lugar lugar1=new Lugar("Kebab","C/ ",111, new GeoPunto(37.393880136657074, -5.960012921592743),R.drawable.kebab_sitio,"https://maps.app.goo.gl/UymTwpkZpCJv1zpG6","Kebab torreblanca","2024/01/24",4.4f, TipoLugar.KEBAB);
+        Lugar lugar2=new Lugar("Game arcos","C.C. Los Arcos, Av. de Andalucía", 111,new GeoPunto(-5.960012921592743, 37.393880136657074),R.drawable.game_arcos,"https://maps.app.goo.gl/UymTwpkZpCJv1zpG6","Game arcos","2024/01/24",1.5f,TipoLugar.GAME);
         conexionBBDD.anadirLugar(lugar1);
         conexionBBDD.anadirLugar(lugar2);
     }
