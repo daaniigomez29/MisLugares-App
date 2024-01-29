@@ -18,10 +18,10 @@ public class ConexionBBDD extends SQLiteOpenHelper implements RepositorioLugares
     private static final String NOMBRE_BD = "lugares";
     private static final int VERSION_BD = 1;
 
-    // Nombre de la tabla
+    //Name of the table
     private static final String TABLA_LUGARES = "lugares";
 
-    // Nombres de las columnas de la tabla
+    // Name of the columns of the table
     private static final String COL_ID = "id";
     private static final String nombre = "nombre";
     private static final String direccion = "direccion";
