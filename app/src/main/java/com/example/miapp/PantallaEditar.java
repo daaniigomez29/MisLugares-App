@@ -36,6 +36,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class PantallaEditar extends Fragment {
 
@@ -166,8 +167,9 @@ public class PantallaEditar extends Fragment {
 
     private String mostrarDatePickerDialog() {
         // Obtener la fecha actual
-        String fechaString = String.valueOf(fecha.getText());
-        final Calendar calendario = obtenerCalendarDesdeString(fechaString);
+        String fechaString = String.valueOf(fecha.getText().toString());
+        Log.d("Fecha", fechaString);
+        final Calendar calendario = Calendar.getInstance();
         int año = calendario.get(Calendar.YEAR);
         int mes = calendario.get(Calendar.MONTH);
         int dia = calendario.get(Calendar.DAY_OF_MONTH);
@@ -188,24 +190,6 @@ public class PantallaEditar extends Fragment {
         // Mostrar el DatePickerDialog
         datePickerDialog.show();
         return fechaAEditar;
-    }
-
-    private static Calendar obtenerCalendarDesdeString(String fechaString) {
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
-        try {
-            // Parsear la cadena y obtener un objeto Date
-            Date fechaDate = sdf.parse(fechaString);
-
-            // Configurar el objeto Calendar con la fecha obtenida
-            calendar.setTime(fechaDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            // Manejar la excepción si hay un error al analizar la cadena
-        }
-
-        return calendar;
     }
 
     public Lugar obtenerDatos(Lugar lugar) {
