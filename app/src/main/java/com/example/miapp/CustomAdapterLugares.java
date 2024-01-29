@@ -31,11 +31,11 @@ public class CustomAdapterLugares extends ArrayAdapter<Lugar> {
             view = LayoutInflater.from(getContext()).inflate(R.layout.elemento_lista, parent, false);
         }
 
+        //The 3 elements that contains every element of listView
         ImageView imagen = view.findViewById(R.id.foto);
         TextView nombre = view.findViewById(R.id.nombreLugar);
         RatingBar ratingBar = view.findViewById(R.id.valoracion);
 
-        Log.d("Lugar CAL", a.toString());
         imagen.setImageResource(a.getFoto());
         nombre.setText(a.getNombre());
         ratingBar.setRating(a.getValoracion());

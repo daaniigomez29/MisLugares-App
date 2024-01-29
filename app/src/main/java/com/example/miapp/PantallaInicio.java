@@ -47,8 +47,8 @@ public class PantallaInicio extends Fragment {
     ) {
         binding = PantallaInicioBinding.inflate(inflater, container, false);
 
-        repositorioLugares = ((Aplicacion) getActivity().getApplication()).repositorioLugares;
-        listaLugares = repositorioLugares.getAll();
+        repositorioLugares = ((Aplicacion) getActivity().getApplication()).repositorioLugares; //Obtains repository from Application
+        listaLugares = repositorioLugares.getAll(); //Obtains all places of the BBDD
 
         Log.d("Vuelvo", "Vuelvo despues de eliminar");
         listViewLugares = binding.getRoot().findViewById(R.id.listViewLugares);
@@ -81,16 +81,13 @@ public class PantallaInicio extends Fragment {
         VistaLugar vistaLugar = new VistaLugar();
 
         //Pasar datos del lugar al fragmento
+        //Pass data of place to Fragment
         Bundle bundle = new Bundle();
         bundle.putSerializable("lugar", lugarSeleccionado);
         vistaLugar.setArguments(bundle);
 
-        //Reemplazar fragmentos
+        //Navigate to fragment
         NavController navController = Navigation.findNavController(requireActivity(), R.id.fragmentoLugar);
         navController.navigate(R.id.SecondFragment, bundle);
-    }
-
-    public ArrayList<Lugar> getListaLugares() {
-        return listaLugares;
     }
 }

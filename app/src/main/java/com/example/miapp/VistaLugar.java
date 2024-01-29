@@ -1,6 +1,8 @@
     package com.example.miapp;
 
+    import android.app.AlertDialog;
     import android.content.Context;
+    import android.content.DialogInterface;
     import android.content.Intent;
     import android.net.Uri;
     import android.os.Bundle;
@@ -48,6 +50,7 @@
         private RatingBar ratingBar;
         private ImageView imagen;
         private Lugar lugar;
+        private boolean confirmarEliminar = false;
 
 
         @Override
@@ -61,9 +64,28 @@
             int id = item.getItemId();
 
             if(id == R.id.eliminarLugar){
-                repositorioLugares.eliminarLugar(lugar.getId());
-                NavController navController = Navigation.findNavController(requireActivity(), R.id.fragmentoLugar);
-                navController.navigate(R.id.FirstFragment);
+                AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                builder.setTitle("Confirmar eliminación");
+                builder.setMessage("¿Estás seguro de eliminar el lugar?");
+
+                // Botón Aceptar
+                builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        repositorioLugares.eliminarLugar(lugar.getId());
+                        NavController navController = Navigation.findNavController(requireActivity(), R.id.fragmentoLugar);
+                        navController.navigate(R.id.FirstFragment);                    }
+                });
+
+                // Botón Cancelar
+                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                });
+
+                // Mostrar el diálogo
+                builder.create().show();
             }
 
             if(id == R.id.iconoGeoPunto){

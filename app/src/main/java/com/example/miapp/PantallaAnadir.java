@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -42,17 +44,17 @@ public class PantallaAnadir extends Fragment {
 
     private RepositorioLugaresImpl repositorioLugares;
     FragmentPantallaAnadirBinding binding;
-    private TextView nombreLugar;
+    private EditText nombreLugar;
     private Spinner tipoLugar;
     private TipoLugar tipoLugarClass;
     private String opcionSeleccionada;
     private ImageView iconoLugar;
-    private TextView direccion;
-    private TextView telefono;
-    private TextView url;
+    private EditText direccion;
+    private EditText telefono;
+    private EditText url;
     private EditText longitud;
     private EditText latitud;
-    private TextView comentario;
+    private EditText comentario;
     private Button fecha;
     private RatingBar ratingBar;
     private ImageView imagen;
@@ -66,6 +68,7 @@ public class PantallaAnadir extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
+        //If user clicks confirm, the differents attributes ends up in a new Lugar that will be added into the database with the method anadirLugar()
         if(id == R.id.confirmarAnadir){
             String nombre = nombreLugar.getText().toString();
 
@@ -89,6 +92,8 @@ public class PantallaAnadir extends Fragment {
             float valor = ratingBar.getRating();
             lugar = new Lugar(nombre, direc, tlf, new GeoPunto(longi,lati), 0, link, coment, fecha, valor, tipoLugarClass);
             repositorioLugares.anadirLugar(lugar);
+            NavController navController = Navigation.findNavController(requireView());
+            navController.navigate(R.id.FirstFragment);
         }
 
         return super.onOptionsItemSelected(item);
@@ -103,7 +108,7 @@ public class PantallaAnadir extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
+        setHasOptionsMenu(true); //Apply the menu that we want to see
     }
 
     @Override
@@ -111,32 +116,32 @@ public class PantallaAnadir extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentPantallaAnadirBinding.inflate(inflater, container, false);
 
-        repositorioLugares = ((Aplicacion) getActivity().getApplication()).repositorioLugares;
+        repositorioLugares = ((Aplicacion) getActivity().getApplication()).repositorioLugares; //Obtains the repository by Aplicacion
 
         nombreLugar = binding.getRoot().findViewById(R.id.nombreLugar);
         tipoLugar = binding.getRoot().findViewById(R.id.tipoLugar);
 
-        // Lista de opciones para el Spinner
+        // List of options for Spinner
         List<String> opciones = Arrays.asList("Game", "Kebab", "Mcdonalds");
-        // Crear un ArrayAdapter desde la lista de opciones
+        //Create ArrayAdapter by list of options
         ArrayAdapter<String> adapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_item, opciones);
-        // Especificar el layout para las opciones al desplegar el Spinner
+        //Specify the layout for the options to desplegate the Spinner
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Asignar el ArrayAdapter al Spinner
+        // Asign the ArrayAdapter to the Spinner
         tipoLugar.setAdapter(adapter);
 
         tipoLugar.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                // Manejar la selección
+                // Handle selection
                 opcionSeleccionada = parentView.getItemAtPosition(position).toString();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                // Acciones cuando no se selecciona nada (si es necesario)
+                //Actions when nothing os selected (if is necesary)
             }
         });
-
+        //Obtains all id
         iconoLugar = binding.getRoot().findViewById(R.id.iconoLugar);
         direccion = binding.getRoot().findViewById(R.id.direccion);
         telefono =  binding.getRoot().findViewById(R.id.telefono);
@@ -151,7 +156,7 @@ public class PantallaAnadir extends Fragment {
         fecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fechaAEditar = mostrarDatePickerDialog();
+                fechaAEditar = mostrarDatePickerDialog(); //Date obtain by clicked, new one or not.
 
             }
         });
@@ -161,44 +166,27 @@ public class PantallaAnadir extends Fragment {
     }
 
     private String mostrarDatePickerDialog() {
+        // Obtains actual Date
         final Calendar calendario = Calendar.getInstance();
         int año = calendario.get(Calendar.YEAR);
         int mes = calendario.get(Calendar.MONTH);
         int dia = calendario.get(Calendar.DAY_OF_MONTH);
 
-        // Crear un DatePickerDialog
+        // Create DatePickerDialog
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 requireActivity(),
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        // La fecha ha sido seleccionada
+                        // Date selected
                         fechaAEditar = dayOfMonth + "/" + (month + 1) + "/" + year;
-                        fecha.setText(fechaAEditar);
+                        fecha.setText(fechaAEditar); //Set the EditText fecha with new Date
                     }
                 },
                 año, mes, dia);
 
-        // Mostrar el DatePickerDialog
+        // Show DatePickerDialog
         datePickerDialog.show();
         return fechaAEditar;
-    }
-
-    private static Calendar obtenerCalendarDesdeString(String fechaString) {
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
-        try {
-            // Parsear la cadena y obtener un objeto Date
-            Date fechaDate = sdf.parse(fechaString);
-
-            // Configurar el objeto Calendar con la fecha obtenida
-            calendar.setTime(fechaDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            // Manejar la excepción si hay un error al analizar la cadena
-        }
-
-        return calendar;
     }
 }

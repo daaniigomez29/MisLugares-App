@@ -10,6 +10,9 @@ public class Aplicacion extends Application {
     public ConexionBBDD conexionBBDD;
     public RepositorioLugaresImpl repositorioLugares;
 
+    /**
+     * Method to instance conexionBBDD and repositorioLugares
+     */
     @Override public void onCreate() {
         super.onCreate();
         conexionBBDD = new ConexionBBDD(this);

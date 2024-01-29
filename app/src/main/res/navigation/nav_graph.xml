@@ -14,6 +14,9 @@
 
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@anim/slide_in_left"
             app:destination="@id/SecondFragment" />
         <action
             android:id="@+id/action_FirstFragment_to_FifthFragment"
@@ -72,9 +75,9 @@
     </fragment>
     <fragment
         android:id="@+id/SixthFragment"
-        android:name="com.example.miapp.Preferencias"
+        android:name="com.example.miapp.SettingsFragment"
         android:label="@string/label_preferencias_fragment"
-        tools:layout="@layout/fragment_preferencias">
+        >
 
         <action
             android:id="@+id/action_SixthFragment_to_FirstFragment"

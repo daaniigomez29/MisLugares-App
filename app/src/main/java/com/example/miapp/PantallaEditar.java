@@ -63,9 +63,10 @@ public class PantallaEditar extends Fragment {
         // Required empty public constructor
     }
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) { //Método que obtiene el botón del menú seleccionado
+    public boolean onOptionsItemSelected(MenuItem item) { //Method that obtains the button of the menu
         int id = item.getItemId();
 
+        //If user clicks to confirm call the method obtenerDatos to put the new data into lugar, then call editarLugar, method of repositorioLugares, then navigates to SecondFragment.
         if(id == R.id.confirmarEdit){
             lugar = obtenerDatos(lugar);
             repositorioLugares.editarLugar(lugar);
@@ -89,24 +90,24 @@ public class PantallaEditar extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
+        setHasOptionsMenu(true); //Apply the menu that we want to see
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentPantallaEditarBinding.inflate(inflater, container, false);
-        repositorioLugares = ((Aplicacion) getActivity().getApplication()).repositorioLugares;
+        repositorioLugares = ((Aplicacion) getActivity().getApplication()).repositorioLugares; //Obtains the repository by Aplicacion
         nombreLugar = binding.getRoot().findViewById(R.id.nombreLugar);
         tipoLugar = binding.getRoot().findViewById(R.id.tipoLugar);
 
-        // Lista de opciones para el Spinner
+        // List of options for Spinner
         List<String> opciones = Arrays.asList("Game", "Kebab", "Mcdonalds");
-        // Crear un ArrayAdapter desde la lista de opciones
+        //Create ArrayAdapter by list of options
         ArrayAdapter<String> adapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_item, opciones);
-        // Especificar el layout para las opciones al desplegar el Spinner
+        //Specify the layout for the options to desplegate the Spinner
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Asignar el ArrayAdapter al Spinner
+        // Asign the ArrayAdapter to the Spinner
         tipoLugar.setAdapter(adapter);
 
         iconoLugar = binding.getRoot().findViewById(R.id.iconoLugar);
@@ -124,7 +125,7 @@ public class PantallaEditar extends Fragment {
         if(args != null && args.containsKey("editarLugar")){
             lugar = (Lugar) args.getSerializable("editarLugar");
             nombreLugar.setText(lugar.getNombre());
-            // Establecer el valor deseado en el Spinner (por ejemplo, "Game")
+            //Set desired value on Spinner (Example: "Game")
             String valorDeseado = lugar.getTipoLugar().getNombre();
             int posicion = opciones.indexOf(valorDeseado);
             if (posicion != -1) {
@@ -133,14 +134,15 @@ public class PantallaEditar extends Fragment {
             tipoLugar.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                    // Manejar la selección
+                    // Handle selection
                     opcionSeleccionada = parentView.getItemAtPosition(position).toString();
                 }
                 @Override
                 public void onNothingSelected(AdapterView<?> parentView) {
-                    // Acciones cuando no se selecciona nada (si es necesario)
+                    //Actions if nothing is clicked (is not necesary)
                 }
             });
+            //Obtains all id
             iconoLugar.setImageResource(lugar.getTipoLugar().getImagen());
             direccion.setText(lugar.getDireccion());
             telefono.setText(String.valueOf(lugar.getTelefono()));
@@ -166,28 +168,26 @@ public class PantallaEditar extends Fragment {
     }
 
     private String mostrarDatePickerDialog() {
-        // Obtener la fecha actual
-        String fechaString = String.valueOf(fecha.getText().toString());
-        Log.d("Fecha", fechaString);
+        // Obtains actual Date
         final Calendar calendario = Calendar.getInstance();
         int año = calendario.get(Calendar.YEAR);
         int mes = calendario.get(Calendar.MONTH);
         int dia = calendario.get(Calendar.DAY_OF_MONTH);
 
-        // Crear un DatePickerDialog
+        // Create DatePickerDialog
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 requireActivity(),
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        // La fecha ha sido seleccionada
+                        // Date selected
                         fechaAEditar = dayOfMonth + "/" + (month + 1) + "/" + year;
-                        fecha.setText(fechaAEditar);
+                        fecha.setText(fechaAEditar); //Set the EditText fecha with new Date
                     }
                 },
                 año, mes, dia);
 
-        // Mostrar el DatePickerDialog
+        // Show DatePickerDialog
         datePickerDialog.show();
         return fechaAEditar;
     }

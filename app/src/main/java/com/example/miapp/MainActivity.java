@@ -1,49 +1,38 @@
 package com.example.miapp;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.preference.PreferenceManager;
 
 import com.example.miapp.Modelo.Lugar;
-import com.example.miapp.Modelo.TipoLugar;
-import com.example.miapp.Repository.ConexionBBDD;
 import com.example.miapp.Repository.Impl.RepositorioLugaresImpl;
 import com.example.miapp.databinding.ActivityMainBinding;
 
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements VistaLugar.OnLugarChangeListener{
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
-    private RepositorioLugaresImpl repositorioLugares;
     private Lugar lugarEditar;
-    private boolean cambiarTemaOscuro = false;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //String temaSeleccionado = obtenerTemaSeleccionado();
-        cambiarTemaOscuro = obtenerConfiguracionTema();
-        aplicarTema(cambiarTemaOscuro);
+        aplicarTema();
 
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        repositorioLugares = ((Aplicacion) getApplication()).repositorioLugares;
 
         setSupportActionBar(binding.toolbar);
         NavController navController = Navigation.findNavController(this, R.id.fragmentoLugar);
@@ -65,22 +54,25 @@ public class MainActivity extends AppCompatActivity implements VistaLugar.OnLuga
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        //Navigate to fragment Acerca de
         if (id == R.id.acercaDe) {
             NavController navController = Navigation.findNavController(this, R.id.fragmentoLugar);
             navController.navigate(R.id.FourthFragment);
         }
 
+        //Navigate to fragment preferencias
         if(id == R.id.preferencias){
             NavController navController = Navigation.findNavController(this, R.id.fragmentoLugar);
             navController.navigate(R.id.SixthFragment);
         }
 
+        //Navigate to fragment Añadir lugar
         if(id == R.id.anadir){
             NavController navController = Navigation.findNavController(this, R.id.fragmentoLugar);
             navController.navigate(R.id.FifthFragment);
         }
 
+        //Navigate to fragment Editar lugar
         if(id == R.id.editarLugar){
             PantallaEditar pantallaEditar = new PantallaEditar();
             Bundle bundle = new Bundle();
@@ -88,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements VistaLugar.OnLuga
             pantallaEditar.setArguments(bundle);
 
             NavController navController = Navigation.findNavController(this, R.id.fragmentoLugar);
-            navController.navigate(R.id.ThirdFragment, bundle);
+            navController.navigate(R.id.ThirdFragment, bundle); //Pass the bundle to fragment
         }
 
         return super.onOptionsItemSelected(item);
@@ -102,28 +94,23 @@ public class MainActivity extends AppCompatActivity implements VistaLugar.OnLuga
     }
 
 
+    //Method to obtain place selected
     @Override
     public void onLugarChanged(Lugar lugar) {
         this.lugarEditar = lugar;
     }
 
-    private String obtenerTemaSeleccionado() {
-        SharedPreferences sharedPreferences = getSharedPreferences("ConfiguracionApp", Context.MODE_PRIVATE);
-        return sharedPreferences.getString("temaSeleccionado", "temaPorDefecto");
-    }
+    private void aplicarTema() {
+        //Obtain actual state from preferences of dark theme by SharedPreferences
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean isDarkThemeEnabled = sharedPreferences.getBoolean("key_dark_theme", false);
 
-    public void aplicarTema(boolean temaOscuro) {
-        if (temaOscuro) {
-            setTheme(R.style.TemaOscuro);
+        //Configure theme about the actual state
+        if (isDarkThemeEnabled) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else {
-
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
-
-    }
-
-    private boolean obtenerConfiguracionTema() {
-        SharedPreferences sharedPreferences = getSharedPreferences("ConfiguracionApp", Context.MODE_PRIVATE);
-        return sharedPreferences.getBoolean("usarTemaOscuro", false);
     }
 
 }
