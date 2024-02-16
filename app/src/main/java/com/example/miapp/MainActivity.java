@@ -13,7 +13,6 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.preference.PreferenceManager;
 
 import com.example.miapp.Modelo.Lugar;
-import com.example.miapp.Repository.Impl.RepositorioLugaresImpl;
 import com.example.miapp.databinding.ActivityMainBinding;
 
 import android.view.Menu;

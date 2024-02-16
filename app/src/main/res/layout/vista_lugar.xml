@@ -118,12 +118,12 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/logoUrl"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:src="@drawable/url" />
+                android:background="@drawable/url" />
 
             <TextView
                 android:id="@+id/url"

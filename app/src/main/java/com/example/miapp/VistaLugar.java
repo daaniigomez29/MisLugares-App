@@ -13,6 +13,7 @@
     import android.view.MenuItem;
     import android.view.View;
     import android.view.ViewGroup;
+    import android.widget.ImageButton;
     import android.widget.ImageView;
     import android.widget.RatingBar;
     import android.widget.TextView;
@@ -44,6 +45,7 @@
         private TextView telefono;
         private TextView longitud;
         private TextView latitud;
+        private ImageButton urlImage;
         private TextView url;
         private TextView comentario;
         private TextView fecha;
@@ -112,6 +114,7 @@
             telefono =  binding.getRoot().findViewById(R.id.telefono);
             longitud = binding.getRoot().findViewById(R.id.longitud);
             latitud = binding.getRoot().findViewById(R.id.latitud);
+            urlImage = binding.getRoot().findViewById(R.id.logoUrl);
             url = binding.getRoot().findViewById(R.id.url);
             comentario = binding.getRoot().findViewById(R.id.comentario);
             fecha = binding.getRoot().findViewById(R.id.fecha);
@@ -138,6 +141,8 @@
                 imagen.setImageResource(lugar.getFoto());
             }
             inyectarLugar();
+
+
             return binding.getRoot();
 
         }
